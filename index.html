@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meva House | Premium Dry Fruits</title>
+    <meta
+      name="description"
+      content="Meva House brings premium dry fruits, nuts, kernels, oils, and walnut chocolate from Gilgit-Baltistan to homes across Pakistan."
+    />
+    <link rel="icon" href="assets/icons/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png" />
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="top-strip">Rs. 2,500 se ooper k order par shipping bilkul free :)</div>
+
+    <header class="site-header">
+      <div class="header-main wrap">
+        <a class="brand header-brand js-home" href="#home" aria-label="Meva House home">
+          <img class="brand-mark" src="assets/photos/logo.png" alt="" />
+          <span class="brand-copy">
+            <span class="brand-text">Meva House</span>
+          </span>
+        </a>
+
+        <button class="deliver-to" type="button" id="locationButton">
+          <span class="pin">&#9679;</span>
+          <div>
+            <strong>Delivery to</strong>
+            <span id="deliveryText">Across Pakistan</span>
+          </div>
+        </button>
+
+        <form class="search-form" role="search" id="searchForm">
+          <span aria-hidden="true">&#8981;</span>
+          <input id="searchInput" type="search" placeholder="Looking for something? Start here..." />
+        </form>
+
+        <button class="login-btn" type="button">Login</button>
+        <button class="cart-btn" type="button">Cart <span id="cartCount">0</span></button>
+      </div>
+
+      <div class="header-meta wrap">
+        <button class="category-toggle" type="button">&#9776; Categories</button>
+        <a href="tel:+923438802989">+92 343 8802989</a>
+        <a href="mailto:mevahousegb@gmail.com">mevahousegb@gmail.com</a>
+        <span>Welcome to Meva House</span>
+      </div>
+    </header>
+
+    <main id="appMain">
+      <div id="homeView">
+      <section class="hero-zone wrap" aria-label="Featured offers">
+        <button class="hero-arrow hero-prev" type="button" aria-label="Previous banner">&lsaquo;</button>
+        <div class="hero-carousel" id="heroCarousel"></div>
+        <button class="hero-arrow hero-next" type="button" aria-label="Next banner">&rsaquo;</button>
+      </section>
+
+      <section class="category-section wrap" aria-labelledby="categoriesTitle">
+        <h2 class="section-title" id="categoriesTitle">Shop by Category</h2>
+        <div class="category-rail" id="categoryRail"></div>
+      </section>
+
+      <div id="sectionsRoot"></div>
+
+      <section class="reviews-section wrap" aria-labelledby="reviewsTitle">
+        <h2 id="reviewsTitle">Customer reviews</h2>
+        <div class="reviews-grid">
+          <article class="review-card">
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>5 days ago</span></div>
+            <p>Fresh packing, clean taste, and fast delivery. The dried apricots were exactly what we wanted.</p>
+            <strong>Amina Zeeshan - Across Pakistan</strong>
+          </article>
+          <article class="review-card">
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>2 weeks ago</span></div>
+            <p>Walnuts and almonds were premium quality. The gift pack looked simple and neat.</p>
+            <strong>Hassan Meer - Gilgit</strong>
+          </article>
+          <article class="review-card">
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>1 month ago</span></div>
+            <p>Good prices, honest service, and the apricot kernel oil was sealed properly.</p>
+            <strong>Sadia Khan - Islamabad</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="story-section wrap" aria-label="About Meva House">
+        <h2>Pakistan's Dry Fruits House</h2>
+        <p>
+          Meva House brings selected dry fruits, nuts, kernels, natural oils, and walnut chocolate
+          from Gilgit-Baltistan to families across Pakistan. Every order is packed with care for
+          freshness, honest weight, and clean taste.
+        </p>
+      </section>
+      </div>
+
+      <div id="routeView" hidden></div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <a class="brand footer-brand js-home" href="#home" aria-label="Meva House home">
+            <img class="brand-mark" src="assets/photos/logo.png" alt="" />
+            <span class="brand-copy">
+              <span class="brand-text">Meva House</span>
+            </span>
+          </a>
+          <p>Premium dry fruits, nuts, oils, and traditional walnut chocolate.</p>
+        </div>
+        <div>
+          <h3>Contact us</h3>
+          <a href="tel:+923438802989">+92 343 8802989</a>
+          <a href="mailto:mevahousegb@gmail.com">mevahousegb@gmail.com</a>
+          <a href="https://mevahouse.com">mevahouse.com</a>
+          <a href="#contact">Contact page</a>
+        </div>
+        <div>
+          <h3>Information</h3>
+          <a href="#about">About Meva House</a>
+          <a href="#terms">Terms and conditions</a>
+          <a href="#privacy">Privacy policy</a>
+          <a href="#checkout">Checkout</a>
+        </div>
+        <div>
+          <h3>Accounts</h3>
+          <a href="#social-tiktok">TikTok</a>
+          <a href="#social-facebook">Facebook</a>
+          <a href="#social-instagram">Instagram</a>
+          <a href="#social-linkedin">LinkedIn</a>
+        </div>
+        <div>
+          <h3>Our time</h3>
+          <p>Orders open every day</p>
+          <p>Delivery available across Pakistan</p>
+          <div class="store-buttons">
+            <span>Google Play</span>
+            <span>App Store</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <a class="floating-call" href="tel:+923438802989" aria-label="Call Meva House">&uarr;</a>
+    <a class="floating-whatsapp" href="https://wa.me/923438802989" aria-label="WhatsApp Meva House">&#9742;</a>
+
+    <nav class="mobile-tabbar" aria-label="Mobile navigation">
+      <a class="js-home" href="#home">&#8962;<span>Home</span></a>
+      <a href="#categoriesTitle">&#9638;<span>Categories</span></a>
+      <a href="#search">&#8981;<span>Search</span></a>
+      <a href="#cart">&#128722;<span>Cart</span></a>
+      <a href="tel:+923438802989">&#9742;<span>Support</span></a>
+    </nav>
+
+    <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+    <aside class="app-drawer" id="categoryDrawer" aria-label="Categories menu" hidden>
+      <div class="drawer-head">
+        <strong>Categories</strong>
+        <button type="button" data-close-drawer>&times;</button>
+      </div>
+      <div id="drawerCategories"></div>
+    </aside>
+
+    <aside class="app-drawer cart-drawer" id="cartDrawer" aria-label="Cart" hidden>
+      <div class="drawer-head">
+        <strong>Your Cart</strong>
+        <button type="button" data-close-drawer>&times;</button>
+      </div>
+      <div id="cartItems"></div>
+      <div class="cart-summary">
+        <span>Total</span>
+        <strong id="cartTotal">Rs. 0.00</strong>
+      </div>
+      <a class="checkout-btn" href="#checkout" id="checkoutLink">Checkout</a>
+    </aside>
+
+    <dialog class="login-dialog" id="locationDialog">
+      <form method="dialog" id="locationForm">
+        <button class="dialog-close" value="close" aria-label="Close location">&times;</button>
+        <h2>Select your order type</h2>
+        <div class="order-type-grid">
+          <label><input type="radio" name="orderType" value="Delivery" checked /> Delivery</label>
+          <label><input type="radio" name="orderType" value="Pick-Up" /> Pick-Up</label>
+        </div>
+        <label>
+          City / Region
+          <input id="locationCity" type="text" placeholder="Select City / Region" value="Across Pakistan" />
+        </label>
+        <label>
+          Area / Sub Region
+          <input id="locationArea" type="text" placeholder="Select Area / Sub Region" value="Gilgit-Baltistan" />
+        </label>
+        <p>Delivery across Pakistan usually takes 60-72 hours. Local pickup can be arranged on WhatsApp.</p>
+        <button class="checkout-btn" value="default">Select</button>
+      </form>
+    </dialog>
+
+    <dialog class="login-dialog" id="loginDialog">
+      <form method="dialog">
+        <button class="dialog-close" value="close" aria-label="Close login">&times;</button>
+        <h2>Login</h2>
+        <label>
+          Phone or email
+          <input type="text" placeholder="+92 343 8802989" />
+        </label>
+        <label>
+          Password
+          <input type="password" placeholder="Enter password" />
+        </label>
+        <button class="checkout-btn" value="close">Continue</button>
+        <p>Demo storefront login. Orders continue through WhatsApp.</p>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" hidden></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
