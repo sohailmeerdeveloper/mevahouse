@@ -1725,11 +1725,11 @@ input {
 
   .hero-zone {
     padding-top: 8px;
-    min-height: 176px;
+    min-height: 188px;
   }
 
   .hero-carousel {
-    height: 144px;
+    height: 156px;
   }
 
   .hero-slide-card.is-active {
@@ -1757,30 +1757,68 @@ input {
   }
 
   .hero-slide-inner {
-    grid-template-columns: 1fr 36%;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    isolation: isolate;
   }
 
   .hero-copy {
-    padding: 24px 26px;
+    max-width: 74%;
+    padding: 0 18px 18px 54px;
   }
 
   .hero-copy p {
-    font-size: 17px;
+    font-size: 13px;
+    margin-bottom: 4px;
   }
 
   .hero-copy h1 {
-    font-size: 25px;
+    font-size: 22px;
+    margin-bottom: 0;
   }
 
   .hero-copy span {
-    font-size: 12px;
-    padding: 6px 12px;
+    display: none;
+  }
+
+  .hero-slide-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(90deg, rgba(6, 60, 134, 0.76) 0%, rgba(6, 60, 134, 0.54) 40%, rgba(6, 60, 134, 0.08) 100%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.28));
+  }
+
+  .hero-slide-card img {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+
+  .slider-dots {
+    left: auto;
+    right: 16px;
+    bottom: 10px;
+    gap: 6px;
+    justify-content: flex-end;
+  }
+
+  .slider-dots button {
+    width: 7px;
+    height: 7px;
+  }
+
+  .slider-dots button.active {
+    width: 18px;
   }
 
   .hero-arrow {
-    width: 42px;
-    height: 42px;
-    font-size: 30px;
+    width: 36px;
+    height: 36px;
+    font-size: 26px;
     box-shadow: 0 10px 24px rgba(5, 24, 52, 0.22);
   }
 
