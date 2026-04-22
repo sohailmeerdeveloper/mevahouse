@@ -63,36 +63,42 @@ const heroSlides = [
     title: "PREMIUM<br />MEVA BOXES",
     cta: "Packed beautifully for homes and gifting",
     image: asset("mixed-nuts.jpg"),
+    href: "#category/meva-gifting",
   },
   {
     eyebrow: "Premium GB taste",
     title: "PURE MEVA,<br />FASTER DELIVERY",
     cta: "Fresh dry fruits across Pakistan",
     image: asset("dry-fruits-market.jpg"),
+    href: "#category/dry-fruits",
   },
   {
     eyebrow: "Fresh from the mountains",
     title: "HONEY,<br />SHILAJIT & KALAW",
     cta: "Signature wellness range now available",
     image: asset("wellness-banner.png"),
+    href: "#category/honey",
   },
   {
     eyebrow: "Northern orchard picks",
     title: "APRICOTS<br />& KERNELS",
     cta: "Sweet, clean, mountain-grown taste",
     image: asset("dried-apricots.jpg"),
+    href: "#category/dried-apricots",
   },
   {
     eyebrow: "Cold-pressed essentials",
     title: "PURE KERNEL<br />OILS",
     cta: "Apricot, almond, and walnut oils",
     image: asset("almond-oil.jpg"),
+    href: "#category/natural-oils",
   },
   {
     eyebrow: "Traditional northern sweet",
     title: "DESI KALAW<br />GIFT BITES",
     cta: "Rich walnut sweetness for sharing",
     image: asset("walnut-chocolate.jpg"),
+    href: "#product/desi-kalaw",
   },
 ];
 
@@ -1448,6 +1454,12 @@ function bindInteractions() {
     const card = event.target.closest(".hero-slide-card");
     if (card?.classList.contains("is-prev")) moveHero(-1, true);
     if (card?.classList.contains("is-next")) moveHero(1, true);
+    if (card?.classList.contains("is-active")) {
+      const slide = heroSlides[Number(card.dataset.index)];
+      if (slide?.href) {
+        window.location.hash = slide.href.slice(1);
+      }
+    }
   });
   heroCarousel.addEventListener("mouseenter", () => clearInterval(heroTimer));
   heroCarousel.addEventListener("mouseleave", startHeroAutoplay);
