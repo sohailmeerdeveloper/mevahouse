@@ -389,6 +389,10 @@ function getProductUnitPrice(productId) {
   return findProduct(productId)?.price;
 }
 
+function getCartItemCount() {
+  return cart.reduce((sum, item) => sum + item.qty, 0);
+}
+
 function getCartSubtotal() {
   return cart.reduce((sum, item) => sum + (typeof item.price === "number" ? item.price * item.qty : 0), 0);
 }
@@ -400,14 +404,13 @@ function getDeliveryEstimate(orderType, city, area, address, subtotal = getCartS
   if (orderType === "Pick-Up") {
     return { charge: 0, eta: "Pick-up can be arranged on WhatsApp after confirmation.", label: "Pick-up selected." };
   }
-  if (subtotal >= FREE_DELIVERY_LIMIT) {
-    return { charge: 0, eta: "Free delivery on this order. Most cities arrive in 2-4 days.", label: `Free delivery above ${money(FREE_DELIVERY_LIMIT)}.` };
-  }
 
   const cityText = `${city || ""} ${area || ""}`.toLowerCase();
   const addressText = `${area || ""} ${address || ""}`.toLowerCase();
   const zone = SHIPPING_ZONES.find((entry) => entry.keywords.some((keyword) => cityText.includes(keyword)));
   let charge = zone?.charge || DEFAULT_SHIPPING_CHARGE;
+  const extraItems = Math.max(0, getCartItemCount() - 1);
+  charge += Math.min(180, extraItems * 35);
   if (SHIPPING_REMOTE_KEYWORDS.some((keyword) => addressText.includes(keyword))) {
     charge += REMOTE_SURCHARGE;
   }
@@ -415,7 +418,9 @@ function getDeliveryEstimate(orderType, city, area, address, subtotal = getCartS
   return {
     charge,
     eta: zone?.eta || "Usually 3-5 days for most Pakistan deliveries.",
-    label: zone ? `Estimated for ${city || area}.` : "Estimated using Pakistan city-zone delivery pricing.",
+    label: zone
+      ? `Estimated for ${city || area} with parcel-size adjustment.`
+      : "Estimated using Pakistan city-zone delivery pricing.",
   };
 }
 
@@ -887,7 +892,7 @@ function renderCheckoutPage() {
           <span>${escapeHtml((paymentMethods.find((method) => method.value === snapshot.paymentMethod) || paymentMethods[0]).detail)}</span>
         </div>
         <label>Order notes<textarea id="checkoutNotes" placeholder="Any special request?"></textarea></label>
-        <p class="checkout-hint">Free delivery for orders above ${money(FREE_DELIVERY_LIMIT)}. Shipping is estimated from the entered city, area, and address zone inside Pakistan.</p>
+        <p class="checkout-hint">Shipping is estimated from the entered city, area, address zone, and parcel size inside Pakistan.</p>
       </form>
       <aside class="order-summary">
         <h2>Order summary</h2>
@@ -1455,6 +1460,13 @@ function bindInteractions() {
   document.querySelector(".cart-btn").addEventListener("click", () => openDrawer("cartDrawer"));
   document.querySelector(".login-btn").addEventListener("click", () => {
     window.location.hash = "account";
+  });
+  document.querySelector(".floating-call").addEventListener("click", (event) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (window.location.hash && window.location.hash !== "#home") {
+      history.replaceState(null, "", "#home");
+    }
   });
   document.getElementById("locationButton").addEventListener("click", () => {
     document.getElementById("locationDialog").showModal();
