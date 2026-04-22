@@ -71,9 +71,9 @@ input {
 
 .header-main {
   display: grid;
-  grid-template-columns: 86px 180px minmax(220px, 1fr) auto auto;
+  grid-template-columns: 86px minmax(150px, 220px) minmax(0, 1fr) auto auto;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   padding: 14px 0 10px;
 }
 
@@ -122,6 +122,7 @@ input {
   cursor: pointer;
   padding: 0;
   text-align: left;
+  align-self: stretch;
 }
 
 .deliver-to .pin {
@@ -148,7 +149,8 @@ input {
   color: var(--muted);
   font-size: 13px;
   font-weight: 400;
-  white-space: nowrap;
+  line-height: 1.25;
+  white-space: normal;
 }
 
 .search-form {
@@ -160,6 +162,8 @@ input {
   padding: 0 12px;
   height: 42px;
   min-width: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .search-form span {
@@ -225,12 +229,12 @@ input {
 .hero-zone {
   position: relative;
   padding: 14px 0 24px;
-  min-height: 302px;
+  min-height: 326px;
 }
 
 .hero-carousel {
   position: relative;
-  height: 264px;
+  height: 288px;
   overflow: hidden;
 }
 
@@ -241,7 +245,7 @@ input {
   width: calc(100% - 392px);
   border-radius: 8px;
   overflow: hidden;
-  background: #063c86;
+  background: #0b4d90;
   color: #fff;
   cursor: pointer;
   opacity: 0;
@@ -287,41 +291,49 @@ input {
 
 .hero-slide-inner {
   height: 100%;
-  background: #063c86;
+  background: #0b4d90;
 }
 
 .hero-slide-inner {
   display: grid;
-  grid-template-columns: 1fr 42%;
+  grid-template-columns: minmax(0, 1.06fr) minmax(280px, 42%);
   align-items: stretch;
 }
 
 .hero-copy {
-  padding: 50px 42px;
+  padding: 42px 44px;
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(130deg, rgba(7, 87, 159, 0.98) 0%, rgba(7, 87, 159, 0.9) 54%, rgba(7, 87, 159, 0.08) 100%);
 }
 
 .hero-copy p {
   color: var(--yellow);
   font-weight: 700;
-  font-size: 26px;
-  margin: 0 0 6px;
+  font-size: 18px;
+  margin: 0 0 10px;
+  text-transform: uppercase;
 }
 
 .hero-copy h1 {
-  font-size: 42px;
+  font-size: 48px;
   font-weight: 800;
-  line-height: 1.02;
-  margin: 0 0 16px;
+  line-height: 0.98;
+  margin: 0 0 18px;
+  max-width: 10ch;
+  text-wrap: balance;
 }
 
 .hero-copy span {
-  border: 2px solid rgba(255, 255, 255, 0.78);
-  border-radius: 999px;
   display: inline-block;
-  padding: 8px 18px;
+  max-width: 28ch;
+  padding: 0;
   font-weight: 500;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .hero-slide-card img {
@@ -329,6 +341,7 @@ input {
   height: 100%;
   object-fit: cover;
   opacity: 1;
+  transform: scale(1.02);
 }
 
 .hero-slide-card.is-prev::after,
@@ -342,12 +355,11 @@ input {
 
 .slider-dots {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 12px;
+  left: 32px;
+  bottom: 22px;
   z-index: 5;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
   pointer-events: none;
 }
@@ -365,8 +377,8 @@ input {
 }
 
 .slider-dots button.active {
-  width: 24px;
-  background: #fff;
+  width: 28px;
+  background: var(--yellow);
 }
 
 .main-promo,
@@ -525,7 +537,7 @@ input {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 14px 34px rgba(5, 24, 52, 0.24);
-  color: var(--blue);
+  color: var(--blue-dark);
   display: grid;
   place-items: center;
   font-size: 36px;
@@ -1097,6 +1109,14 @@ input {
   cursor: pointer;
 }
 
+.detail-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-width: min(100%, 360px);
+}
+
 .service-boxes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1446,6 +1466,11 @@ input {
   margin: 12px 0;
 }
 
+#deliveryLabel {
+  font-weight: 700;
+  margin: 10px 0 4px;
+}
+
 .order-summary p,
 .info-card p {
   color: #404651;
@@ -1644,12 +1669,29 @@ input {
     width: min(100% - 36px, 1080px);
   }
 
+  .header-main {
+    grid-template-columns: 78px minmax(136px, 184px) minmax(0, 1fr) auto auto;
+    gap: 12px;
+  }
+
+  .deliver-to strong {
+    font-size: 13px;
+  }
+
+  .deliver-to span {
+    font-size: 12px;
+  }
+
   .products-grid {
     grid-template-columns: repeat(5, minmax(120px, 1fr));
   }
 
   .hero-zone {
-    min-height: 302px;
+    min-height: 286px;
+  }
+
+  .hero-carousel {
+    height: 248px;
   }
 
   .hero-slide-card.is-active {
@@ -1674,6 +1716,24 @@ input {
 
   .hero-slide-card.is-after {
     left: calc(200% - 408px);
+  }
+
+  .hero-copy {
+    padding: 34px 34px 38px;
+  }
+
+  .hero-copy p {
+    font-size: 15px;
+  }
+
+  .hero-copy h1 {
+    font-size: 38px;
+    max-width: 9ch;
+  }
+
+  .hero-copy span {
+    font-size: 13px;
+    max-width: 23ch;
   }
 }
 
@@ -1729,7 +1789,7 @@ input {
   }
 
   .hero-carousel {
-    height: 156px;
+    height: 176px;
   }
 
   .hero-slide-card.is-active {
@@ -1765,21 +1825,22 @@ input {
 
   .hero-copy {
     max-width: 74%;
-    padding: 0 18px 18px 54px;
+    padding: 0 18px 20px 54px;
   }
 
   .hero-copy p {
-    font-size: 13px;
+    font-size: 12px;
     margin-bottom: 4px;
   }
 
   .hero-copy h1 {
-    font-size: 22px;
-    margin-bottom: 0;
+    font-size: 24px;
+    margin-bottom: 8px;
   }
 
   .hero-copy span {
-    display: none;
+    font-size: 11px;
+    max-width: 21ch;
   }
 
   .hero-slide-inner::before {
@@ -1788,7 +1849,7 @@ input {
     inset: 0;
     z-index: -1;
     background:
-      linear-gradient(90deg, rgba(6, 60, 134, 0.76) 0%, rgba(6, 60, 134, 0.54) 40%, rgba(6, 60, 134, 0.08) 100%),
+      linear-gradient(90deg, rgba(7, 87, 159, 0.88) 0%, rgba(7, 87, 159, 0.62) 44%, rgba(7, 87, 159, 0.08) 100%),
       linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.28));
   }
 
@@ -1799,11 +1860,11 @@ input {
   }
 
   .slider-dots {
-    left: auto;
-    right: 16px;
+    left: 54px;
+    right: auto;
     bottom: 10px;
     gap: 6px;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
   .slider-dots button {

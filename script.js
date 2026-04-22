@@ -6,10 +6,18 @@ const STORAGE_KEYS = {
   delivery: "mevahouse-delivery-v1",
 };
 
-const HERO_AUTOPLAY_MS = 2000;
+const HERO_AUTOPLAY_MS = 3000;
 const FREE_DELIVERY_LIMIT = 2500;
-const LOCAL_DELIVERY_CHARGE = 200;
-const NATIONWIDE_DELIVERY_CHARGE = 350;
+const SHIPPING_ZONES = [
+  { keywords: ["gilgit", "hunza", "skardu", "ghizer", "astore", "nagar"], charge: 220, eta: "1-2 days inside Gilgit-Baltistan." },
+  { keywords: ["islamabad", "rawalpindi", "abbottabad", "mansehra", "peshawar"], charge: 320, eta: "2-3 days for north and twin cities." },
+  { keywords: ["lahore", "faisalabad", "gujranwala", "sialkot", "multan"], charge: 360, eta: "2-4 days for Punjab metro cities." },
+  { keywords: ["karachi", "hyderabad", "sukkur", "nawabshah"], charge: 430, eta: "3-5 days for Sindh deliveries." },
+  { keywords: ["quetta", "turbat", "khuzdar", "gwadar"], charge: 480, eta: "3-6 days for Balochistan deliveries." },
+];
+const SHIPPING_REMOTE_KEYWORDS = ["remote", "valley", "village", "tehsil", "bypass", "motorway", "cantt", "phase", "block"];
+const DEFAULT_SHIPPING_CHARGE = 390;
+const REMOTE_SURCHARGE = 70;
 
 const DEFAULT_ACCOUNT = {
   loggedIn: false,
@@ -51,39 +59,39 @@ const paymentMethods = [
 
 const heroSlides = [
   {
-    eyebrow: "Gift-ready dry fruits",
-    title: "MEVA GIFT<br />BASKETS",
-    cta: "Packed for sharing",
+    eyebrow: "Gift-ready northern picks",
+    title: "PREMIUM<br />MEVA BOXES",
+    cta: "Packed beautifully for homes and gifting",
     image: asset("mixed-nuts.jpg"),
   },
   {
-    eyebrow: "Premium GB Taste",
-    title: "FREE SHIPPING<br />+ PURE MEVA",
-    cta: "All across Pakistan",
+    eyebrow: "Premium GB taste",
+    title: "PURE MEVA,<br />FASTER DELIVERY",
+    cta: "Fresh dry fruits across Pakistan",
     image: asset("dry-fruits-market.jpg"),
   },
   {
-    eyebrow: "Fresh from the north",
+    eyebrow: "Fresh from the mountains",
     title: "HONEY,<br />SHILAJIT & KALAW",
-    cta: "Now available",
+    cta: "Signature wellness range now available",
     image: asset("wellness-banner.png"),
   },
   {
-    eyebrow: "Dried apricots",
-    title: "DRIED APRICOTS<br />& KERNELS",
-    cta: "Northern orchard taste",
+    eyebrow: "Northern orchard picks",
+    title: "APRICOTS<br />& KERNELS",
+    cta: "Sweet, clean, mountain-grown taste",
     image: asset("dried-apricots.jpg"),
   },
   {
-    eyebrow: "Natural oils",
+    eyebrow: "Cold-pressed essentials",
     title: "PURE KERNEL<br />OILS",
-    cta: "Apricot, almond, walnut",
+    cta: "Apricot, almond, and walnut oils",
     image: asset("almond-oil.jpg"),
   },
   {
-    eyebrow: "Walnut sweet boxes",
-    title: "DESI KALAW<br />SWEET BITES",
-    cta: "Traditional northern taste",
+    eyebrow: "Traditional northern sweet",
+    title: "DESI KALAW<br />GIFT BITES",
+    cta: "Rich walnut sweetness for sharing",
     image: asset("walnut-chocolate.jpg"),
   },
 ];
@@ -377,25 +385,38 @@ function numericPrice(value) {
   return typeof value === "number" ? value : Number.MAX_SAFE_INTEGER;
 }
 
+function getProductUnitPrice(productId) {
+  return findProduct(productId)?.price;
+}
+
 function getCartSubtotal() {
   return cart.reduce((sum, item) => sum + (typeof item.price === "number" ? item.price * item.qty : 0), 0);
 }
 
-function getDeliveryCharge(orderType, city, subtotal = getCartSubtotal()) {
-  if (!cart.length) return 0;
-  if (orderType === "Pick-Up") return 0;
-  if (subtotal >= FREE_DELIVERY_LIMIT) return 0;
-  const cleanCity = (city || "").toLowerCase();
-  if (cleanCity.includes("gilgit") || cleanCity.includes("hunza") || cleanCity.includes("skardu")) {
-    return LOCAL_DELIVERY_CHARGE;
+function getDeliveryEstimate(orderType, city, area, address, subtotal = getCartSubtotal()) {
+  if (!cart.length) {
+    return { charge: 0, eta: "Add products to see the delivery estimate.", label: "No active order yet." };
   }
-  return NATIONWIDE_DELIVERY_CHARGE;
-}
+  if (orderType === "Pick-Up") {
+    return { charge: 0, eta: "Pick-up can be arranged on WhatsApp after confirmation.", label: "Pick-up selected." };
+  }
+  if (subtotal >= FREE_DELIVERY_LIMIT) {
+    return { charge: 0, eta: "Free delivery on this order. Most cities arrive in 2-4 days.", label: `Free delivery above ${money(FREE_DELIVERY_LIMIT)}.` };
+  }
 
-function getDeliveryEta(orderType) {
-  return orderType === "Pick-Up"
-    ? "Pick-up can be arranged on WhatsApp after confirmation."
-    : "Delivery across Pakistan usually takes 60-72 hours after confirmation.";
+  const cityText = `${city || ""} ${area || ""}`.toLowerCase();
+  const addressText = `${area || ""} ${address || ""}`.toLowerCase();
+  const zone = SHIPPING_ZONES.find((entry) => entry.keywords.some((keyword) => cityText.includes(keyword)));
+  let charge = zone?.charge || DEFAULT_SHIPPING_CHARGE;
+  if (SHIPPING_REMOTE_KEYWORDS.some((keyword) => addressText.includes(keyword))) {
+    charge += REMOTE_SURCHARGE;
+  }
+
+  return {
+    charge,
+    eta: zone?.eta || "Usually 3-5 days for most Pakistan deliveries.",
+    label: zone ? `Estimated for ${city || area}.` : "Estimated using Pakistan city-zone delivery pricing.",
+  };
 }
 
 function getSelectedPaymentMethod() {
@@ -409,7 +430,7 @@ function getCheckoutSnapshot() {
   const address = document.getElementById("customerAddress")?.value.trim() || account.address || deliveryDetails.address;
   const paymentMethod = getSelectedPaymentMethod();
   const subtotal = getCartSubtotal();
-  const deliveryCharge = getDeliveryCharge(orderType, city, subtotal);
+  const deliveryEstimate = getDeliveryEstimate(orderType, city, area, address, subtotal);
   return {
     name: document.getElementById("customerName")?.value.trim() || account.name,
     phone: document.getElementById("customerPhone")?.value.trim() || account.phone,
@@ -421,9 +442,10 @@ function getCheckoutSnapshot() {
     orderType,
     paymentMethod,
     subtotal,
-    deliveryCharge,
-    total: subtotal + deliveryCharge,
-    eta: getDeliveryEta(orderType),
+    deliveryCharge: deliveryEstimate.charge,
+    total: subtotal + deliveryEstimate.charge,
+    eta: deliveryEstimate.eta,
+    deliveryLabel: deliveryEstimate.label,
   };
 }
 
@@ -637,6 +659,7 @@ function showRoute(html) {
   const route = document.getElementById("routeView");
   route.hidden = false;
   route.innerHTML = html;
+  updateDetailPrice();
   closeDrawers();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -759,7 +782,10 @@ function renderProductPage(productSlug) {
           <input id="detailQty" value="1" inputmode="numeric" />
           <button type="button" data-qty="1">+</button>
         </div>
-        <button class="detail-add" type="button" data-add="${item.id}">${money(item.price)} &nbsp;&nbsp; Add To Cart</button>
+        <button class="detail-add" id="detailAddButton" type="button" data-add="${item.id}" data-unit-price="${item.price}">
+          <span id="detailAddPrice">${money(item.price)}</span>
+          <span>Add To Cart</span>
+        </button>
         <div class="service-boxes">
           <div><strong>Payment methods</strong><span>Cash on delivery, bank transfer, and Easypaisa/JazzCash.</span></div>
           <div><strong>Delivery info</strong><span>Free shipping over ${money(FREE_DELIVERY_LIMIT)} and 60-72 hour ETA.</span></div>
@@ -861,7 +887,7 @@ function renderCheckoutPage() {
           <span>${escapeHtml((paymentMethods.find((method) => method.value === snapshot.paymentMethod) || paymentMethods[0]).detail)}</span>
         </div>
         <label>Order notes<textarea id="checkoutNotes" placeholder="Any special request?"></textarea></label>
-        <p class="checkout-hint">Free delivery for orders above ${money(FREE_DELIVERY_LIMIT)}. Your saved account details can be updated anytime from the account page.</p>
+        <p class="checkout-hint">Free delivery for orders above ${money(FREE_DELIVERY_LIMIT)}. Shipping is estimated from the entered city, area, and address zone inside Pakistan.</p>
       </form>
       <aside class="order-summary">
         <h2>Order summary</h2>
@@ -870,7 +896,8 @@ function renderCheckoutPage() {
         <div class="checkout-row"><span>Delivery charges</span><strong id="checkoutDelivery">${money(snapshot.deliveryCharge)}</strong></div>
         <div class="checkout-total"><span>Total payable</span><strong id="checkoutGrandTotal">${money(snapshot.total)}</strong></div>
         <a class="checkout-btn ${cart.length ? "" : "is-disabled"}" id="placeOrderLink" href="${buildWhatsAppOrderLink()}">Place order on WhatsApp</a>
-        <p id="deliveryEta">${escapeHtml(getDeliveryEta(deliveryDetails.orderType))}</p>
+        <p id="deliveryLabel">${escapeHtml(snapshot.deliveryLabel)}</p>
+        <p id="deliveryEta">${escapeHtml(snapshot.eta)}</p>
       </aside>
     </div>
   </section>`);
@@ -1210,12 +1237,14 @@ function updateCheckoutSummary() {
   const delivery = document.getElementById("checkoutDelivery");
   const total = document.getElementById("checkoutGrandTotal");
   const eta = document.getElementById("deliveryEta");
+  const deliveryLabel = document.getElementById("deliveryLabel");
   const link = document.getElementById("placeOrderLink");
   const paymentHelp = document.getElementById("paymentMethodHelp");
 
   if (subtotal) subtotal.textContent = money(snapshot.subtotal);
   if (delivery) delivery.textContent = money(snapshot.deliveryCharge);
   if (total) total.textContent = money(snapshot.total);
+  if (deliveryLabel) deliveryLabel.textContent = snapshot.deliveryLabel;
   if (eta) eta.textContent = snapshot.eta;
   if (link) {
     link.href = cart.length ? buildWhatsAppOrderLink() : "#search";
@@ -1235,6 +1264,18 @@ function updateCheckoutSummary() {
   };
   persistDelivery();
   syncAccountUI();
+}
+
+function updateDetailPrice() {
+  const qtyInput = document.getElementById("detailQty");
+  const addButton = document.getElementById("detailAddButton");
+  const priceNode = document.getElementById("detailAddPrice");
+  if (!qtyInput || !addButton || !priceNode) return;
+
+  const quantity = Math.max(1, Number(qtyInput.value || 1));
+  qtyInput.value = String(quantity);
+  const unitPrice = Number(addButton.dataset.unitPrice || 0);
+  priceNode.textContent = money(unitPrice * quantity);
 }
 
 function showToast(message) {
@@ -1506,6 +1547,7 @@ function bindInteractions() {
     if (detailQtyButton) {
       const input = document.getElementById("detailQty");
       input.value = Math.max(1, Number(input.value || 1) + Number(detailQtyButton.dataset.qty));
+      updateDetailPrice();
     }
 
     if (event.target.id === "accountLogoutButton") {
@@ -1528,6 +1570,9 @@ function bindInteractions() {
   });
 
   document.addEventListener("input", (event) => {
+    if (event.target.id === "detailQty") {
+      updateDetailPrice();
+    }
     if (event.target.closest("#checkoutForm")) {
       updateCheckoutSummary();
     }
