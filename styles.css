@@ -2043,3 +2043,397 @@ input {
     font-size: 11px;
   }
 }
+
+.banner-amber {
+  background: linear-gradient(135deg, #8a4b05, #d8871d);
+}
+
+.section-head-inline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 18px;
+}
+
+.section-head-inline h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.section-head-inline a {
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.blog-section {
+  padding: 8px 0 24px;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.blog-grid-route {
+  margin-top: 18px;
+}
+
+.blog-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.blog-card img {
+  width: 100%;
+  aspect-ratio: 1.45;
+  object-fit: cover;
+}
+
+.blog-copy {
+  padding: 18px;
+}
+
+.blog-meta {
+  display: inline-block;
+  color: var(--red-dark);
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.blog-card h3 {
+  margin: 0 0 10px;
+  font-size: 19px;
+  line-height: 1.3;
+}
+
+.blog-card p {
+  margin: 0;
+  color: #404651;
+  line-height: 1.6;
+}
+
+.blog-post {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.blog-hero {
+  width: 100%;
+  aspect-ratio: 2.15;
+  object-fit: cover;
+}
+
+.blog-post-copy {
+  padding: 24px 26px 28px;
+}
+
+.blog-post-copy h1 {
+  margin: 8px 0 16px;
+  font-size: 34px;
+}
+
+.blog-post-copy p {
+  color: #404651;
+  line-height: 1.75;
+  margin: 0 0 14px;
+}
+
+.route-note,
+.results-copy,
+.checkout-hint {
+  color: #58606d;
+  line-height: 1.6;
+}
+
+.route-note {
+  margin: -6px 0 18px;
+}
+
+.results-copy {
+  margin: 0 0 16px;
+  font-weight: 600;
+}
+
+.filter-bar {
+  display: grid;
+  grid-template-columns: minmax(240px, 1.45fr) repeat(3, minmax(0, 1fr)) auto;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 18px;
+}
+
+.filter-field {
+  min-width: 0;
+}
+
+.filter-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: #404651;
+}
+
+.filter-field input,
+.filter-field select,
+.account-card input,
+.account-card textarea,
+.account-card select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  padding: 0 12px;
+  font: inherit;
+}
+
+.filter-field select,
+.account-card select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #68707d 50%),
+    linear-gradient(135deg, #68707d 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 2px),
+    calc(100% - 12px) calc(50% - 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 34px;
+}
+
+.filter-field-search {
+  grid-column: span 2;
+}
+
+.filter-bar button,
+.secondary-btn {
+  border: 0;
+  border-radius: 6px;
+  min-height: 44px;
+  padding: 0 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filter-bar button {
+  align-self: end;
+  background: var(--blue);
+  color: #fff;
+}
+
+.cart-qty-controls {
+  display: inline-grid;
+  grid-template-columns: 28px auto 28px;
+  gap: 6px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.cart-qty-controls button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.cart-qty-controls b {
+  min-width: 18px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.checkout-grid-two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.checkout-form h3 {
+  margin: 20px 0 12px;
+  font-size: 18px;
+}
+
+.payment-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.payment-option {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.payment-option input {
+  display: inline-block;
+  width: auto;
+  min-height: 0;
+  margin: 0 8px 10px 0;
+}
+
+.payment-option strong,
+.payment-option span {
+  display: block;
+}
+
+.payment-option strong {
+  margin-bottom: 6px;
+}
+
+.payment-option span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.line-item span {
+  color: #30343b;
+}
+
+.checkout-btn.is-disabled {
+  opacity: 0.55;
+}
+
+.account-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.account-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.account-card h2 {
+  margin: 0 0 18px;
+}
+
+.account-card label {
+  display: block;
+  font-weight: 800;
+  margin: 0 0 14px;
+}
+
+.account-card textarea {
+  min-height: 88px;
+  padding: 12px;
+  resize: vertical;
+}
+
+.account-summary-card {
+  display: grid;
+  gap: 18px;
+}
+
+.account-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.account-metrics div,
+.account-info-list div {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7f8fa;
+  padding: 14px;
+}
+
+.account-metrics strong,
+.account-metrics span,
+.account-info-list strong,
+.account-info-list span {
+  display: block;
+}
+
+.account-metrics strong {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.account-info-list {
+  display: grid;
+  gap: 10px;
+}
+
+.account-info-list span {
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.secondary-btn {
+  background: #eef2f6;
+  color: #293140;
+}
+
+@media (max-width: 980px) {
+  .filter-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filter-field-search {
+    grid-column: span 2;
+  }
+
+  .payment-options {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-grid,
+  .account-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .section-head-inline {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .filter-bar,
+  .checkout-grid-two,
+  .account-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-field-search {
+    grid-column: auto;
+  }
+
+  .blog-grid {
+    gap: 14px;
+  }
+
+  .blog-post-copy {
+    padding: 18px 18px 22px;
+  }
+
+  .blog-post-copy h1 {
+    font-size: 26px;
+  }
+}

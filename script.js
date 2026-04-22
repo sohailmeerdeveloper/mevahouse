@@ -1,5 +1,54 @@
 const asset = (name) => `assets/photos/${name}`;
 
+const STORAGE_KEYS = {
+  cart: "mevahouse-cart-v2",
+  account: "mevahouse-account-v1",
+  delivery: "mevahouse-delivery-v1",
+};
+
+const HERO_AUTOPLAY_MS = 2000;
+const FREE_DELIVERY_LIMIT = 2500;
+const LOCAL_DELIVERY_CHARGE = 200;
+const NATIONWIDE_DELIVERY_CHARGE = 350;
+
+const DEFAULT_ACCOUNT = {
+  loggedIn: false,
+  name: "",
+  phone: "",
+  email: "",
+  password: "",
+  city: "Across Pakistan",
+  area: "Gilgit-Baltistan",
+  address: "",
+  preferredPayment: "Cash on Delivery",
+};
+
+const DEFAULT_DELIVERY = {
+  orderType: "Delivery",
+  city: "Across Pakistan",
+  area: "Gilgit-Baltistan",
+  address: "",
+  paymentMethod: "Cash on Delivery",
+};
+
+const paymentMethods = [
+  {
+    value: "Cash on Delivery",
+    title: "Cash on Delivery",
+    detail: "Pay when your order arrives at your doorstep.",
+  },
+  {
+    value: "Bank Transfer",
+    title: "Bank Transfer",
+    detail: "Share the payment receipt on WhatsApp after confirming the order.",
+  },
+  {
+    value: "Easypaisa / JazzCash",
+    title: "Easypaisa / JazzCash",
+    detail: "Fast wallet payment for quick confirmations.",
+  },
+];
+
 const heroSlides = [
   {
     eyebrow: "Gift-ready dry fruits",
@@ -14,28 +63,70 @@ const heroSlides = [
     image: asset("dry-fruits-market.jpg"),
   },
   {
+    eyebrow: "Fresh from the north",
+    title: "HONEY,<br />SHILAJIT & KALAW",
+    cta: "Now available",
+    image: asset("wellness-banner.png"),
+  },
+  {
     eyebrow: "Dried apricots",
     title: "DRIED APRICOTS<br />& KERNELS",
     cta: "Northern orchard taste",
     image: asset("dried-apricots.jpg"),
   },
   {
-    eyebrow: "Fresh Northern Nuts",
-    title: "WALNUTS<br />ALMONDS & KAJU",
-    cta: "Packed fresh daily",
-    image: asset("almonds.jpg"),
-  },
-  {
-    eyebrow: "Natural Oils",
+    eyebrow: "Natural oils",
     title: "PURE KERNEL<br />OILS",
     cta: "Apricot, almond, walnut",
     image: asset("almond-oil.jpg"),
   },
   {
-    eyebrow: "Walnut chocolate",
+    eyebrow: "Walnut sweet boxes",
     title: "DESI KALAW<br />SWEET BITES",
     cta: "Traditional northern taste",
     image: asset("walnut-chocolate.jpg"),
+  },
+];
+
+const blogPosts = [
+  {
+    id: "how-to-store-dry-fruits",
+    title: "How to keep dry fruits fresh for longer",
+    excerpt: "Simple airtight storage, cooler shelves, and small packing habits that preserve taste and crunch.",
+    tag: "Storage",
+    date: "22 April 2026",
+    image: asset("mixed-nuts.jpg"),
+    body: [
+      "Dry fruits stay fresher when they are protected from heat, direct light, and kitchen moisture. Airtight jars or sealed pouches keep flavor and texture stable for daily use.",
+      "For almonds, walnuts, and raisins, divide large packs into smaller weekly portions. Open one pack at a time and keep the rest sealed in a cool cabinet or refrigerator during warmer months.",
+      "Honey and shilajit should also be kept away from direct sunlight. A dry spoon and a tightly sealed lid go a long way in protecting purity and shelf life.",
+    ],
+  },
+  {
+    id: "mountain-honey-and-shilajit-guide",
+    title: "Choosing pure mountain honey and authentic shilajit",
+    excerpt: "What clients usually ask before ordering honey and wellness products from the north.",
+    tag: "Wellness",
+    date: "22 April 2026",
+    image: asset("wellness-banner.png"),
+    body: [
+      "Pure mountain honey usually has a natural floral aroma, a rich amber tone, and a clean sweetness that does not feel overly sharp. Seasonal texture changes are normal and do not reduce quality.",
+      "Shilajit is best presented with clear usage guidance, careful packing, and a clean ingredient explanation. Customers care about consistency, origin, and trust before they buy wellness products online.",
+      "On a storefront, product pages should answer three things quickly: what it is, how it is packed, and how the customer will receive it. Clear delivery and payment details help conversion just as much as the product image.",
+    ],
+  },
+  {
+    id: "gift-boxes-for-family-orders",
+    title: "Why curated gift boxes convert better than mixed lists",
+    excerpt: "A neat order summary and ready-made bundles make gifting decisions easier for clients.",
+    tag: "Gifting",
+    date: "22 April 2026",
+    image: asset("dry-fruits-market.jpg"),
+    body: [
+      "Gift buyers usually want speed and confidence. When you offer a clear gift box with visible contents, price, and delivery timing, they spend less time comparing and more time placing the order.",
+      "Healthy gifting works especially well when the box mixes nuts, dried fruits, and one signature item like kalaw. It feels generous without becoming visually messy.",
+      "A short blog section on your storefront helps answer these questions in advance and gives clients a reason to trust the catalog before they open WhatsApp.",
+    ],
   },
 ];
 
@@ -43,25 +134,25 @@ const categories = [
   { title: "Dry Fruits", section: "DRY FRUITS", image: asset("mixed-nuts.jpg") },
   { title: "Nuts & Kernels", section: "NUTS & KERNELS", image: asset("almonds.jpg") },
   { title: "Dried Apricots", section: "DRIED FRESH FRUITS", image: asset("dried-apricots.jpg") },
-  { title: "Premium Figs", section: "DRY FRUITS", image: asset("dried-figs.jpg") },
   { title: "Natural Oils", section: "NATURAL OILS", image: asset("almond-oil.jpg") },
+  { title: "Honey", section: "HONEY, SHILAJIT & KALAW", image: asset("mountain-honey.png") },
+  { title: "Shilajit", section: "HONEY, SHILAJIT & KALAW", image: asset("shilajit-resin.png") },
+  { title: "Kalaw", section: "HONEY, SHILAJIT & KALAW", image: asset("walnut-chocolate.jpg") },
   { title: "Gift Hampers", section: "MEVA GIFTING", image: asset("dry-fruits-market.jpg"), group: true },
-  { title: "Local Cherries", section: "DRIED FRESH FRUITS", image: asset("dried-cherries.jpg") },
   { title: "Walnut Chocolate", section: "WALNUT CHOCOLATE", image: asset("walnut-chocolate.jpg") },
 ];
 
 const subcategoriesBySection = {
   "DRY FRUITS": [
-    { title: "Walnuts", keywords: ["walnut", "akhrot"] },
-    { title: "Almonds", keywords: ["almond", "badaam"] },
-    { title: "Raisins", keywords: ["raisin", "kishmish", "grape"] },
+    { title: "Apricots", keywords: ["apricot", "khobani"] },
     { title: "Figs", keywords: ["fig", "anjeer"] },
+    { title: "Raisins", keywords: ["raisin", "kishmish", "grape"] },
     { title: "Mulberry", keywords: ["mulberry", "shahtoot"] },
     { title: "Plums", keywords: ["plum", "bukhara"] },
   ],
   "NUTS & KERNELS": [
-    { title: "Walnuts", keywords: ["walnut"] },
-    { title: "Almonds", keywords: ["almond"] },
+    { title: "Walnuts", keywords: ["walnut", "akhrot"] },
+    { title: "Almonds", keywords: ["almond", "badaam"] },
     { title: "Apricot Kernels", keywords: ["apricot kernel", "khobani giri"] },
     { title: "Chilgoza", keywords: ["chilgoza", "pine"] },
     { title: "Pistachio", keywords: ["pistachio", "pista"] },
@@ -81,6 +172,11 @@ const subcategoriesBySection = {
     { title: "Almond Oil", keywords: ["almond"] },
     { title: "Walnut Oil", keywords: ["walnut"] },
     { title: "Gift Pairs", keywords: ["gift", "pair"] },
+  ],
+  "HONEY, SHILAJIT & KALAW": [
+    { title: "Honey", keywords: ["honey", "shehad"] },
+    { title: "Shilajit", keywords: ["shilajit", "resin"] },
+    { title: "Kalaw", keywords: ["kalaw", "walnut sweet"] },
   ],
   "MEVA GIFTING": [
     { title: "Gift Baskets", keywords: ["basket", "box"] },
@@ -113,7 +209,6 @@ const catalogSections = [
       product("Dried Pear", "Local dried pear", "dried-pear.jpg", 900, 1050, "14% OFF", "Featured"),
       product("Dried Cherry", "Local dry cherry", "dried-cherries.jpg", 900, 1100, "18% OFF", "Local"),
       product("Dried Mulberry", "Sweet shahtoot", "mulberries.jpg", 900, 1000, "10% OFF", "Best Seller"),
-      product("Dry Grapes", "Traditional dry grapes", "raisins.jpg", "Call for price", "", "", "Seasonal"),
       product("Fig & Raisin Mix", "Sweet energy mix", "dried-figs.jpg", 2600, 2900, "10% OFF", "Featured"),
     ],
   },
@@ -131,7 +226,7 @@ const catalogSections = [
       product("Chilgoza", "Pine nuts", "pine-nuts.jpg", 6500, 7100, "8% OFF", "Premium"),
       product("Pistachio", "Fresh pista", "pistachios.jpg", 3600, 4100, "12% OFF", "Featured"),
       product("Cashew", "Creamy kaju", "cashews.jpg", 3600, 4200, "14% OFF", "Popular"),
-      product("Peanuts", "Roasted mung phali", "peanuts.jpg", "Call for price", "", "", "Local"),
+      product("Peanuts", "Roasted mung phali", "peanuts.jpg", 1100, 1250, "12% OFF", "Local"),
       product("Mixed Dry Fruit", "Balanced family mix", "mixed-nuts.jpg", 2500, 2900, "14% OFF", "Best Seller"),
     ],
   },
@@ -163,6 +258,19 @@ const catalogSections = [
       product("Almond Kernel Oil", "1 liter badaam giri oil", "almond-oil.jpg", 3000, 3400, "12% OFF", "Premium"),
       product("Walnut Kernel Oil", "Akhrot giri oil", "walnuts.jpg", 3000, 3500, "14% OFF", "Hot"),
       product("Oil Gift Pair", "Two bottle set", "mixed-nuts.jpg", 5800, 6400, "9% OFF", "Gift"),
+    ],
+  },
+  {
+    title: "HONEY, SHILAJIT & KALAW",
+    eyebrow: "Fresh from the northern mountains",
+    headline: "Signature Wellness",
+    subline: "Pure honey, real shilajit, and traditional kalaw",
+    bannerClass: "banner-amber",
+    bannerImage: asset("wellness-banner.png"),
+    products: [
+      product("Mountain Honey", "Pure Gilgit mountain honey", "mountain-honey.png", 1800, 2100, "14% OFF", "New"),
+      product("Pure Shilajit Resin", "Natural Himalayan resin", "shilajit-resin.png", 2800, 3200, "12% OFF", "Premium"),
+      product("Kalaw Gift Box", "Walnut sweet gift box", "walnut-chocolate.jpg", 3200, 3600, "11% OFF", "Featured"),
     ],
   },
   {
@@ -201,22 +309,155 @@ const catalogSections = [
 ];
 
 let heroIndex = 1;
-let cart = [];
-let deliveryDetails = {
-  orderType: "Delivery",
-  city: "Across Pakistan",
-  area: "Gilgit-Baltistan",
-};
-
-const allProducts = () =>
-  catalogSections.flatMap((section) => section.products.map((item) => ({ ...item, section: section.title })));
+let heroTimer = 0;
+let account = { ...DEFAULT_ACCOUNT, ...loadState(STORAGE_KEYS.account, {}) };
+let deliveryDetails = { ...DEFAULT_DELIVERY, ...loadState(STORAGE_KEYS.delivery, {}) };
+let cart = restoreCart(loadState(STORAGE_KEYS.cart, []));
 
 function product(name, desc, image, price, oldPrice, discount, tag) {
   return { id: slug(name), name, desc, image: asset(image), price, oldPrice, discount, tag };
 }
 
+function loadState(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function saveState(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+function restoreCart(savedCart) {
+  if (!Array.isArray(savedCart)) return [];
+  return savedCart
+    .map((entry) => {
+      const item = findProduct(entry.id);
+      if (!item) return null;
+      return { ...item, qty: Math.max(1, Number(entry.qty) || 1) };
+    })
+    .filter(Boolean);
+}
+
+function persistCart() {
+  saveState(
+    STORAGE_KEYS.cart,
+    cart.map((item) => ({ id: item.id, qty: item.qty })),
+  );
+}
+
+function persistDelivery() {
+  saveState(STORAGE_KEYS.delivery, deliveryDetails);
+}
+
+function persistAccount() {
+  saveState(STORAGE_KEYS.account, account);
+}
+
+function allProducts() {
+  return catalogSections.flatMap((section) => section.products.map((item) => ({ ...item, section: section.title })));
+}
+
+function findProduct(productSlug) {
+  return allProducts().find((item) => item.id === productSlug);
+}
+
+function findBlogPost(postSlug) {
+  return blogPosts.find((post) => post.id === postSlug);
+}
+
 function money(value) {
   return typeof value === "number" ? `Rs. ${value.toLocaleString("en-PK")}.00` : value;
+}
+
+function numericPrice(value) {
+  return typeof value === "number" ? value : Number.MAX_SAFE_INTEGER;
+}
+
+function getCartSubtotal() {
+  return cart.reduce((sum, item) => sum + (typeof item.price === "number" ? item.price * item.qty : 0), 0);
+}
+
+function getDeliveryCharge(orderType, city, subtotal = getCartSubtotal()) {
+  if (!cart.length) return 0;
+  if (orderType === "Pick-Up") return 0;
+  if (subtotal >= FREE_DELIVERY_LIMIT) return 0;
+  const cleanCity = (city || "").toLowerCase();
+  if (cleanCity.includes("gilgit") || cleanCity.includes("hunza") || cleanCity.includes("skardu")) {
+    return LOCAL_DELIVERY_CHARGE;
+  }
+  return NATIONWIDE_DELIVERY_CHARGE;
+}
+
+function getDeliveryEta(orderType) {
+  return orderType === "Pick-Up"
+    ? "Pick-up can be arranged on WhatsApp after confirmation."
+    : "Delivery across Pakistan usually takes 60-72 hours after confirmation.";
+}
+
+function getSelectedPaymentMethod() {
+  return document.querySelector("input[name='paymentMethod']:checked")?.value || deliveryDetails.paymentMethod || account.preferredPayment;
+}
+
+function getCheckoutSnapshot() {
+  const orderType = document.querySelector("input[name='checkoutOrderType']:checked")?.value || deliveryDetails.orderType;
+  const city = document.getElementById("checkoutCity")?.value.trim() || account.city || deliveryDetails.city;
+  const area = document.getElementById("checkoutArea")?.value.trim() || account.area || deliveryDetails.area;
+  const address = document.getElementById("customerAddress")?.value.trim() || account.address || deliveryDetails.address;
+  const paymentMethod = getSelectedPaymentMethod();
+  const subtotal = getCartSubtotal();
+  const deliveryCharge = getDeliveryCharge(orderType, city, subtotal);
+  return {
+    name: document.getElementById("customerName")?.value.trim() || account.name,
+    phone: document.getElementById("customerPhone")?.value.trim() || account.phone,
+    email: document.getElementById("customerEmail")?.value.trim() || account.email,
+    city,
+    area,
+    address,
+    notes: document.getElementById("checkoutNotes")?.value.trim() || "",
+    orderType,
+    paymentMethod,
+    subtotal,
+    deliveryCharge,
+    total: subtotal + deliveryCharge,
+    eta: getDeliveryEta(orderType),
+  };
+}
+
+function buildWhatsAppOrderLink() {
+  const snapshot = getCheckoutSnapshot();
+  const order = cart.map((item) => `${item.name} x ${item.qty}`).join(", ");
+  const message = [
+    "Assalam o Alaikum, I want to order from Meva House.",
+    `Order: ${order || "Please share product details"}`,
+    `Subtotal: ${money(snapshot.subtotal)}`,
+    `Delivery charges: ${money(snapshot.deliveryCharge)}`,
+    `Grand total: ${money(snapshot.total)}`,
+    `Order type: ${snapshot.orderType}`,
+    `Payment method: ${snapshot.paymentMethod}`,
+    `City: ${snapshot.city}`,
+    `Area: ${snapshot.area}`,
+    `Address: ${snapshot.address || "Will share on call"}`,
+    snapshot.name ? `Name: ${snapshot.name}` : "",
+    snapshot.phone ? `Phone: ${snapshot.phone}` : "",
+    snapshot.email ? `Email: ${snapshot.email}` : "",
+    snapshot.notes ? `Notes: ${snapshot.notes}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+  return `https://wa.me/923438802989?text=${encodeURIComponent(message)}`;
+}
+
+function syncAccountUI() {
+  const loginButton = document.querySelector(".login-btn");
+  loginButton.textContent = account.loggedIn ? (account.name.split(" ")[0] || "My Account") : "Login";
+  loginButton.setAttribute("aria-label", account.loggedIn ? "Open account" : "Open account");
+  document.getElementById("deliveryText").textContent = `${deliveryDetails.area}, ${deliveryDetails.city}`;
+  document.getElementById("locationCity").value = deliveryDetails.city;
+  document.getElementById("locationArea").value = deliveryDetails.area;
 }
 
 function renderCategories() {
@@ -234,7 +475,7 @@ function renderDrawerCategory(category) {
       <span>${category.title}</span>
     </a>
     <div class="drawer-subcategories">
-      ${subs.slice(0, 5).map((sub) => `<a href="#category/${slug(category.title)}?sub=${slug(sub.title)}">${sub.title}</a>`).join("")}
+      ${subs.slice(0, 5).map((sub) => `<a href="${buildHash(`category/${slug(category.title)}`, { sub: slug(sub.title) })}">${sub.title}</a>`).join("")}
     </div>
   </div>`;
 }
@@ -295,6 +536,33 @@ function renderProduct(item) {
   </article>`;
 }
 
+function renderBlogPreview() {
+  const root = document.getElementById("blogPreviewRoot");
+  if (!root) return;
+  root.innerHTML = `<section class="blog-section wrap" aria-labelledby="blogPreviewTitle">
+    <div class="section-head-inline">
+      <h2 id="blogPreviewTitle">From the blog</h2>
+      <a href="#blog">View all posts</a>
+    </div>
+    <div class="blog-grid">
+      ${blogPosts.map((post) => renderBlogCard(post)).join("")}
+    </div>
+  </section>`;
+}
+
+function renderBlogCard(post) {
+  return `<article class="blog-card">
+    <a href="#blog/${post.id}">
+      <img src="${post.image}" alt="${post.title}" />
+      <div class="blog-copy">
+        <span class="blog-meta">${post.date} / ${post.tag}</span>
+        <h3>${post.title}</h3>
+        <p>${post.excerpt}</p>
+      </div>
+    </a>
+  </article>`;
+}
+
 function renderHero() {
   const carousel = document.getElementById("heroCarousel");
   if (!carousel.querySelector(".hero-slide-card")) {
@@ -310,9 +578,9 @@ function renderHeroSlide(slide, index) {
   return `<article class="hero-slide-card" data-index="${index}">
     <div class="hero-slide-inner">
       <div class="hero-copy">
-      <p>${slide.eyebrow}</p>
-      <h1>${slide.title}</h1>
-      <span>${slide.cta}</span>
+        <p>${slide.eyebrow}</p>
+        <h1>${slide.title}</h1>
+        <span>${slide.cta}</span>
       </div>
       <img src="${slide.image}" alt="${slide.eyebrow}" />
     </div>
@@ -329,9 +597,14 @@ function updateHero() {
   });
 }
 
-function moveHero(direction) {
-  heroIndex = (heroIndex + direction + heroSlides.length) % heroSlides.length;
+function setHeroIndex(index, resetTimer = false) {
+  heroIndex = (index + heroSlides.length) % heroSlides.length;
   updateHero();
+  if (resetTimer) startHeroAutoplay();
+}
+
+function moveHero(direction, resetTimer = false) {
+  setHeroIndex(heroIndex + direction, resetTimer);
 }
 
 function getHeroPosition(index) {
@@ -345,9 +618,17 @@ function getHeroPosition(index) {
   return forwardDistance < total / 2 ? "is-after" : "is-before";
 }
 
+function startHeroAutoplay() {
+  clearInterval(heroTimer);
+  heroTimer = window.setInterval(() => {
+    moveHero(1);
+  }, HERO_AUTOPLAY_MS);
+}
+
 function showHome() {
   document.getElementById("homeView").hidden = false;
   document.getElementById("routeView").hidden = true;
+  closeDrawers();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -362,45 +643,67 @@ function showRoute(html) {
 
 function renderCategoryPage(categorySlug) {
   const [cleanSlug, queryString = ""] = categorySlug.split("?");
-  const filterSlug = new URLSearchParams(queryString).get("sub");
+  const params = new URLSearchParams(queryString);
+  const activeSub = params.get("sub") || "";
+  const query = params.get("q") || "";
+  const tag = params.get("tag") || "";
+  const sort = params.get("sort") || "featured";
   const category = categories.find((item) => slug(item.title) === cleanSlug);
   const section = catalogSections.find((item) => slug(item.title) === cleanSlug || item.title === category?.section);
   if (!section) {
-    renderSearchPage("");
+    renderSearchPage("", new URLSearchParams());
     return;
   }
 
   const subcategories = subcategoriesBySection[section.title] || [];
-  const selectedSubcategory = subcategories.find((sub) => slug(sub.title) === filterSlug);
-  const products = selectedSubcategory
-    ? section.products.filter((item) => productMatchesSubcategory(item, selectedSubcategory))
-    : section.products;
+  const selectedSubcategory = subcategories.find((sub) => slug(sub.title) === activeSub);
+  const filterRoute = `category/${slug(category?.title || section.title)}`;
+
+  let products = section.products.slice();
+  if (selectedSubcategory) {
+    products = products.filter((item) => productMatchesSubcategory(item, selectedSubcategory));
+  }
+  products = filterProducts(products, { query, tag, sort });
+
   const body = section.groups && !selectedSubcategory
-    ? `<div class="subcat-grid">${section.groups.map(renderSubcategory).join("")}</div>
-       <div class="products-grid listing-grid">${products.map(renderProduct).join("")}</div>`
-    : `<div class="products-grid listing-grid">${products.map(renderProduct).join("") || `<p>No products found in this subcategory.</p>`}</div>`;
+    ? `<div class="subcat-grid">${section.groups.map((item) => renderSubcategory(item, filterRoute)).join("")}</div>
+       <div class="products-grid listing-grid">${renderProductsOrEmpty(products, "No products found in this category.")}</div>`
+    : `<div class="products-grid listing-grid">${renderProductsOrEmpty(products, "No products found in this category.")}</div>`;
 
   showRoute(`<section class="route-page wrap">
     ${renderCrumbs(["Home", category?.title || section.title])}
     ${renderBanner(section)}
     <h1>${selectedSubcategory?.title || category?.title || section.title}</h1>
-    ${renderSubcategoryChips(category || { title: section.title }, subcategories, filterSlug)}
+    <p class="route-note">Search within this category, sort results, or filter by popular tags.</p>
+    ${renderSubcategoryChips(filterRoute, subcategories, activeSub, { q: query, tag, sort })}
+    ${renderFilterBar({
+      route: filterRoute,
+      query,
+      tag,
+      sort,
+      hidden: activeSub ? { sub: activeSub } : {},
+      tags: getTagsForProducts(section.products),
+      includeSectionFilter: false,
+    })}
+    <p class="results-copy">${products.length} product${products.length === 1 ? "" : "s"} available</p>
     ${body}
   </section>`);
 }
 
-function renderSubcategory(item) {
-  return `<a class="subcat-card" href="#category/meva-gifting">
+function renderSubcategory(item, route) {
+  return `<a class="subcat-card" href="${buildHash(route, {})}">
     <img src="${item.image}" alt="${item.title}" />
     <strong>${item.title}</strong>
   </a>`;
 }
 
-function renderSubcategoryChips(category, subcategories, activeSlug) {
+function renderSubcategoryChips(route, subcategories, activeSlug, baseParams) {
   if (!subcategories.length) return "";
   return `<div class="subcategory-chips">
-    <a class="${!activeSlug ? "active" : ""}" href="#category/${slug(category.title)}">All</a>
-    ${subcategories.map((sub) => `<a class="${slug(sub.title) === activeSlug ? "active" : ""}" href="#category/${slug(category.title)}?sub=${slug(sub.title)}">${sub.title}</a>`).join("")}
+    <a class="${!activeSlug ? "active" : ""}" href="${buildHash(route, baseParams)}">All</a>
+    ${subcategories
+      .map((sub) => `<a class="${slug(sub.title) === activeSlug ? "active" : ""}" href="${buildHash(route, { ...baseParams, sub: slug(sub.title) })}">${sub.title}</a>`)
+      .join("")}
   </div>`;
 }
 
@@ -416,11 +719,14 @@ function getSectionForCategory(category) {
 function renderProductPage(productSlug) {
   const item = findProduct(productSlug);
   if (!item) {
-    renderSearchPage(productSlug.replace(/-/g, " "));
+    renderSearchPage(productSlug.replace(/-/g, " "), new URLSearchParams());
     return;
   }
-  const related = allProducts().filter((productItem) => productItem.section === item.section && productItem.id !== item.id).slice(0, 4);
+  const related = allProducts()
+    .filter((productItem) => productItem.section === item.section && productItem.id !== item.id)
+    .slice(0, 4);
   const boughtTogether = allProducts().filter((productItem) => productItem.id !== item.id).slice(0, 5);
+
   showRoute(`<section class="route-page wrap">
     ${renderCrumbs(["Home", item.section, item.name])}
     <div class="product-detail">
@@ -455,9 +761,9 @@ function renderProductPage(productSlug) {
         </div>
         <button class="detail-add" type="button" data-add="${item.id}">${money(item.price)} &nbsp;&nbsp; Add To Cart</button>
         <div class="service-boxes">
-          <div><strong>Cash and Online payments</strong><span>Pay COD or online, hassle-free.</span></div>
-          <div><strong>Delivery ETA</strong><span>Delivery ETA is 60-72 hours.</span></div>
-          <div><strong>Customer Support</strong><span>Connect with us 24/7.</span></div>
+          <div><strong>Payment methods</strong><span>Cash on delivery, bank transfer, and Easypaisa/JazzCash.</span></div>
+          <div><strong>Delivery info</strong><span>Free shipping over ${money(FREE_DELIVERY_LIMIT)} and 60-72 hour ETA.</span></div>
+          <div><strong>Account save</strong><span>Save your details once and reuse them at checkout.</span></div>
         </div>
       </div>
     </div>
@@ -475,68 +781,122 @@ function renderBundleItem(item) {
   </label>`;
 }
 
-function renderSearchPage(query) {
-  const cleanQuery = query.trim().toLowerCase();
-  const results = allProducts().filter((item) => {
-    const text = `${item.name} ${item.desc} ${item.section}`.toLowerCase();
-    return !cleanQuery || text.includes(cleanQuery);
-  });
+function renderSearchPage(query = "", params = new URLSearchParams()) {
+  const cleanQuery = (query || params.get("q") || "").trim();
+  const sectionFilter = params.get("section") || "";
+  const tag = params.get("tag") || "";
+  const sort = params.get("sort") || "featured";
+  let results = allProducts();
+
+  if (sectionFilter) {
+    results = results.filter((item) => slug(item.section) === sectionFilter);
+  }
+  results = filterProducts(results, { query: cleanQuery, tag, sort });
+
   showRoute(`<section class="route-page wrap">
     ${renderCrumbs(["Home", "Search"])}
-    <h1>${cleanQuery ? `Search: ${escapeHtml(query)}` : "Search products"}</h1>
-    <div class="route-search">
-      <input id="routeSearchInput" value="${escapeHtml(query)}" placeholder="Search dry fruits, nuts, oils..." />
-      <button id="routeSearchButton" type="button">Search</button>
-    </div>
-    <div class="products-grid listing-grid">${results.map(renderProduct).join("") || `<p>No products found.</p>`}</div>
+    <h1>${cleanQuery ? `Search: ${escapeHtml(cleanQuery)}` : "Search products"}</h1>
+    <p class="route-note">Search the catalog and filter results by section, popular tag, or sorting.</p>
+    ${renderFilterBar({
+      route: "search",
+      query: cleanQuery,
+      section: sectionFilter,
+      tag,
+      sort,
+      tags: getTagsForProducts(allProducts()),
+      includeSectionFilter: true,
+    })}
+    <p class="results-copy">${results.length} result${results.length === 1 ? "" : "s"} found</p>
+    <div class="products-grid listing-grid">${renderProductsOrEmpty(results, "No products found.")}</div>
   </section>`);
 }
 
 function renderCheckoutPage() {
-  const cartRows = cart
-    .map((item) => `<div class="checkout-row">
-      <span>${item.name} x ${item.qty}</span>
-      <strong>${typeof item.price === "number" ? money(item.price * item.qty) : item.price}</strong>
-    </div>`)
-    .join("") || `<p>Your cart is empty. Add products before placing an order.</p>`;
+  const snapshot = {
+    ...getCheckoutSnapshot(),
+    name: account.name,
+    phone: account.phone,
+    email: account.email,
+    city: account.city || deliveryDetails.city,
+    area: account.area || deliveryDetails.area,
+    address: account.address || deliveryDetails.address,
+    paymentMethod: deliveryDetails.paymentMethod || account.preferredPayment,
+  };
+
   showRoute(`<section class="route-page wrap">
     ${renderCrumbs(["Home", "Checkout"])}
     <h1>Checkout</h1>
     <div class="checkout-layout">
       <form class="checkout-form" id="checkoutForm">
-        <h2>Customer details</h2>
-        <label>Name<input id="customerName" type="text" placeholder="Your name" /></label>
-        <label>Phone<input id="customerPhone" type="tel" placeholder="+92 343 8802989" /></label>
-        <label>City / Region<input id="checkoutCity" type="text" value="${escapeHtml(deliveryDetails.city)}" /></label>
-        <label>Area / Address<textarea id="customerAddress" placeholder="House, street, area">${escapeHtml(deliveryDetails.area)}</textarea></label>
-        <label>Order notes<textarea id="checkoutNotes" placeholder="Any special request?"></textarea></label>
+        <h2>Your details</h2>
+        <div class="checkout-grid-two">
+          <label>Full name<input id="customerName" type="text" placeholder="Your name" value="${escapeHtml(snapshot.name || "")}" /></label>
+          <label>Phone number<input id="customerPhone" type="tel" placeholder="+92 343 8802989" value="${escapeHtml(snapshot.phone || "")}" /></label>
+        </div>
+        <label>Email<input id="customerEmail" type="email" placeholder="name@example.com" value="${escapeHtml(snapshot.email || "")}" /></label>
+        <h3>Delivery information</h3>
         <div class="order-type-grid checkout-types">
           <label><input type="radio" name="checkoutOrderType" value="Delivery" ${deliveryDetails.orderType === "Delivery" ? "checked" : ""} /> Delivery</label>
           <label><input type="radio" name="checkoutOrderType" value="Pick-Up" ${deliveryDetails.orderType === "Pick-Up" ? "checked" : ""} /> Pick-Up</label>
         </div>
-        <div class="payment-note">
-          <strong>Cash and online payments</strong>
-          <span>Cash on delivery is available. Online payment details can be shared on WhatsApp.</span>
+        <div class="checkout-grid-two">
+          <label>City / Region<input id="checkoutCity" type="text" value="${escapeHtml(snapshot.city || deliveryDetails.city)}" /></label>
+          <label>Area / Sub Region<input id="checkoutArea" type="text" value="${escapeHtml(snapshot.area || deliveryDetails.area)}" /></label>
         </div>
+        <label>House / street / complete address<textarea id="customerAddress" placeholder="House, street, area">${escapeHtml(snapshot.address || "")}</textarea></label>
+        <h3>Payment method</h3>
+        <div class="payment-options">
+          ${paymentMethods
+            .map(
+              (method) => `<label class="payment-option">
+                <input type="radio" name="paymentMethod" value="${method.value}" ${(snapshot.paymentMethod || account.preferredPayment || DEFAULT_DELIVERY.paymentMethod) === method.value ? "checked" : ""} />
+                <strong>${method.title}</strong>
+                <span>${method.detail}</span>
+              </label>`,
+            )
+            .join("")}
+        </div>
+        <div class="payment-note" id="paymentMethodHelp">
+          <strong>${escapeHtml((paymentMethods.find((method) => method.value === snapshot.paymentMethod) || paymentMethods[0]).title)}</strong>
+          <span>${escapeHtml((paymentMethods.find((method) => method.value === snapshot.paymentMethod) || paymentMethods[0]).detail)}</span>
+        </div>
+        <label>Order notes<textarea id="checkoutNotes" placeholder="Any special request?"></textarea></label>
+        <p class="checkout-hint">Free delivery for orders above ${money(FREE_DELIVERY_LIMIT)}. Your saved account details can be updated anytime from the account page.</p>
       </form>
       <aside class="order-summary">
         <h2>Order summary</h2>
-        ${cartRows}
-        <div class="checkout-total"><span>Total</span><strong>${money(getCartTotal())}</strong></div>
-        <a class="checkout-btn" id="placeOrderLink" href="${buildWhatsAppOrderLink()}">Place order on WhatsApp</a>
-        <p>Delivery across Pakistan usually takes 60-72 hours after confirmation.</p>
+        <div id="checkoutRows">${renderCheckoutRows()}</div>
+        <div class="checkout-row"><span>Subtotal</span><strong id="checkoutSubtotal">${money(snapshot.subtotal)}</strong></div>
+        <div class="checkout-row"><span>Delivery charges</span><strong id="checkoutDelivery">${money(snapshot.deliveryCharge)}</strong></div>
+        <div class="checkout-total"><span>Total payable</span><strong id="checkoutGrandTotal">${money(snapshot.total)}</strong></div>
+        <a class="checkout-btn ${cart.length ? "" : "is-disabled"}" id="placeOrderLink" href="${buildWhatsAppOrderLink()}">Place order on WhatsApp</a>
+        <p id="deliveryEta">${escapeHtml(getDeliveryEta(deliveryDetails.orderType))}</p>
       </aside>
     </div>
   </section>`);
-  updatePlaceOrderLink();
+  updateCheckoutSummary();
+}
+
+function renderCheckoutRows() {
+  if (!cart.length) {
+    return `<p>Your cart is empty. Add products before placing an order.</p>`;
+  }
+  return cart
+    .map(
+      (item) => `<div class="checkout-row line-item">
+        <span>${item.name} x ${item.qty}</span>
+        <strong>${money(item.price * item.qty)}</strong>
+      </div>`,
+    )
+    .join("");
 }
 
 function renderInfoPage(type) {
   const pages = {
     about: {
       title: "About Meva House",
-      body: `<p>Meva House is built for premium dry fruits, nuts, kernels, oils, and traditional walnut chocolate from Gilgit-Baltistan. We focus on fresh packing, honest weight, clean taste, and delivery across Pakistan.</p>
-      <p>Our catalog includes walnuts, almonds, dried apricot, apricot kernels, chilgoza, dried figs, raisins, pistachio, cashew, dried fruits, natural oils, and Kalaw.</p>`,
+      body: `<p>Meva House is built for premium dry fruits, nuts, kernels, oils, honey, shilajit, and traditional kalaw from Gilgit-Baltistan. We focus on fresh packing, honest weight, clean taste, and delivery across Pakistan.</p>
+      <p>Our catalog includes walnuts, almonds, dried apricot, apricot kernels, chilgoza, dried figs, raisins, pistachio, cashew, dried fruits, natural oils, honey, shilajit, and kalaw gift packs.</p>`,
     },
     contact: {
       title: "Contact Meva House",
@@ -545,8 +905,14 @@ function renderInfoPage(type) {
         <a href="tel:+923438802989">Call: +92 343 8802989</a>
         <a href="https://wa.me/923438802989">WhatsApp: +92 343 8802989</a>
         <a href="mailto:mevahousegb@gmail.com">Email: mevahousegb@gmail.com</a>
-        <a href="https://mevahouse.com">Website: mevahouse.com</a>
+        <a href="#account">Account and saved details</a>
       </div>`,
+    },
+    delivery: {
+      title: "Delivery Information",
+      body: `<p>Meva House delivers across Pakistan. Standard delivery usually takes 60-72 hours after your order is confirmed.</p>
+      <p>Orders above ${money(FREE_DELIVERY_LIMIT)} qualify for free delivery. Smaller orders use a delivery charge based on city and order type. Pick-up orders carry no delivery charge.</p>
+      <p>Delivery and payment preferences can be saved in your account so checkout becomes faster on repeat orders.</p>`,
     },
     terms: {
       title: "Terms and Conditions",
@@ -556,8 +922,8 @@ function renderInfoPage(type) {
     },
     privacy: {
       title: "Privacy Policy",
-      body: `<p>Meva House only uses customer information for order confirmation, delivery, support, and service updates.</p>
-      <p>Your name, phone number, address, and order notes are used to process your order. We do not sell customer information.</p>
+      body: `<p>Meva House only uses customer information for account saving, order confirmation, delivery, support, and service updates.</p>
+      <p>Your name, phone number, email, address, and order notes are used to process your order. We do not sell customer information.</p>
       <p>Messages sent through WhatsApp, email, or phone are handled only for Meva House customer support and order service.</p>`,
     },
   };
@@ -569,71 +935,205 @@ function renderInfoPage(type) {
   </section>`);
 }
 
+function renderAccountPage() {
+  if (!account.loggedIn) {
+    showRoute(`<section class="route-page wrap">
+      ${renderCrumbs(["Home", "Account"])}
+      <h1>Create or sign in</h1>
+      <p class="route-note">This static storefront saves your account only in the current browser, so repeat customers can reuse checkout details quickly.</p>
+      <div class="account-layout">
+        <form class="account-card" id="accountSignupForm">
+          <h2>Create account</h2>
+          <label>Full name<input name="name" type="text" placeholder="Your full name" required /></label>
+          <label>Phone<input name="phone" type="tel" placeholder="+92 343 8802989" required /></label>
+          <label>Email<input name="email" type="email" placeholder="name@example.com" required /></label>
+          <label>Password<input name="password" type="password" placeholder="Create a password" required /></label>
+          <div class="checkout-grid-two">
+            <label>City<input name="city" type="text" value="${escapeHtml(deliveryDetails.city)}" /></label>
+            <label>Area<input name="area" type="text" value="${escapeHtml(deliveryDetails.area)}" /></label>
+          </div>
+          <label>Address<textarea name="address" placeholder="House, street, area"></textarea></label>
+          <label>Preferred payment method
+            <select name="preferredPayment">
+              ${paymentMethods.map((method) => `<option value="${method.value}">${method.title}</option>`).join("")}
+            </select>
+          </label>
+          <button class="checkout-btn" type="submit">Create account</button>
+        </form>
+        <form class="account-card" id="accountLoginForm">
+          <h2>Sign in</h2>
+          <label>Phone or email<input name="identity" type="text" placeholder="+92 343 8802989 or name@example.com" required /></label>
+          <label>Password<input name="password" type="password" placeholder="Enter your password" required /></label>
+          <button class="checkout-btn" type="submit">Sign in</button>
+          <p>Use the details saved in this browser. After sign in, your checkout form fills automatically.</p>
+        </form>
+      </div>
+    </section>`);
+    return;
+  }
+
+  showRoute(`<section class="route-page wrap">
+    ${renderCrumbs(["Home", "My account"])}
+    <h1>My account</h1>
+    <div class="account-layout">
+      <form class="account-card" id="accountProfileForm">
+        <h2>Saved profile</h2>
+        <label>Full name<input name="name" type="text" value="${escapeHtml(account.name)}" required /></label>
+        <div class="checkout-grid-two">
+          <label>Phone<input name="phone" type="tel" value="${escapeHtml(account.phone)}" required /></label>
+          <label>Email<input name="email" type="email" value="${escapeHtml(account.email)}" required /></label>
+        </div>
+        <div class="checkout-grid-two">
+          <label>City<input name="city" type="text" value="${escapeHtml(account.city)}" /></label>
+          <label>Area<input name="area" type="text" value="${escapeHtml(account.area)}" /></label>
+        </div>
+        <label>Address<textarea name="address">${escapeHtml(account.address)}</textarea></label>
+        <label>Preferred payment method
+          <select name="preferredPayment">
+            ${paymentMethods
+              .map((method) => `<option value="${method.value}" ${account.preferredPayment === method.value ? "selected" : ""}>${method.title}</option>`)
+              .join("")}
+          </select>
+        </label>
+        <button class="checkout-btn" type="submit">Save changes</button>
+      </form>
+      <aside class="account-card account-summary-card">
+        <h2>Account summary</h2>
+        <div class="account-metrics">
+          <div><strong>${cart.reduce((sum, item) => sum + item.qty, 0)}</strong><span>Items in cart</span></div>
+          <div><strong>${money(getCartSubtotal())}</strong><span>Current subtotal</span></div>
+        </div>
+        <div class="account-info-list">
+          <div><strong>Saved city</strong><span>${escapeHtml(account.city || "Across Pakistan")}</span></div>
+          <div><strong>Saved area</strong><span>${escapeHtml(account.area || "Gilgit-Baltistan")}</span></div>
+          <div><strong>Preferred payment</strong><span>${escapeHtml(account.preferredPayment)}</span></div>
+        </div>
+        <a class="checkout-btn" href="#checkout">Continue to checkout</a>
+        <button class="secondary-btn" id="accountLogoutButton" type="button">Sign out</button>
+      </aside>
+    </div>
+  </section>`);
+}
+
+function renderBlogPage() {
+  showRoute(`<section class="route-page wrap">
+    ${renderCrumbs(["Home", "Blog"])}
+    <h1>Blog</h1>
+    <p class="route-note">Short buying guides, storage tips, and product education for dry fruits, honey, shilajit, and gifting.</p>
+    <div class="blog-grid blog-grid-route">
+      ${blogPosts.map((post) => renderBlogCard(post)).join("")}
+    </div>
+  </section>`);
+}
+
+function renderBlogPostPage(postSlug) {
+  const post = findBlogPost(postSlug);
+  if (!post) {
+    renderBlogPage();
+    return;
+  }
+  showRoute(`<section class="route-page wrap">
+    ${renderCrumbs(["Home", "Blog", post.title])}
+    <article class="blog-post">
+      <img class="blog-hero" src="${post.image}" alt="${post.title}" />
+      <div class="blog-post-copy">
+        <span class="blog-meta">${post.date} / ${post.tag}</span>
+        <h1>${post.title}</h1>
+        ${post.body.map((paragraph) => `<p>${paragraph}</p>`).join("")}
+      </div>
+    </article>
+    <div class="section-head-inline">
+      <h2>More from the blog</h2>
+      <a href="#blog">Back to blog</a>
+    </div>
+    <div class="blog-grid blog-grid-route">
+      ${blogPosts.filter((entry) => entry.id !== post.id).map((entry) => renderBlogCard(entry)).join("")}
+    </div>
+  </section>`);
+}
+
 function renderCrumbs(items) {
   return `<nav class="breadcrumbs">${items.map((item, index) => (index ? `<span>${item}</span>` : `<a href="#home">${item}</a>`)).join(" / ")}</nav>`;
 }
 
-function findProduct(productSlug) {
-  return allProducts().find((item) => item.id === productSlug);
+function renderProductsOrEmpty(products, emptyMessage) {
+  return products.map(renderProduct).join("") || `<p>${emptyMessage}</p>`;
 }
 
-function addToCart(productId, qty = 1) {
-  const item = findProduct(productId);
-  if (!item) return;
-  const existing = cart.find((cartItem) => cartItem.id === productId);
-  if (existing) existing.qty += qty;
-  else cart.push({ ...item, qty });
-  updateCart();
-  showToast(`${item.name} added to cart`);
+function getTagsForProducts(products) {
+  return [...new Set(products.map((item) => item.tag).filter(Boolean))];
 }
 
-function updateCart() {
-  const count = cart.reduce((sum, item) => sum + item.qty, 0);
-  document.getElementById("cartCount").textContent = String(count);
-  document.getElementById("cartItems").innerHTML =
-    cart
-      .map(
-        (item) => `<div class="cart-line">
-          <img src="${item.image}" alt="${item.name}" />
-          <div><strong>${item.name}</strong><span>${money(item.price)} x ${item.qty}</span></div>
-          <button type="button" data-remove="${item.id}">&times;</button>
-        </div>`,
-      )
-      .join("") || `<p class="empty-cart">Your cart is empty.</p>`;
-  const total = cart.reduce((sum, item) => sum + (typeof item.price === "number" ? item.price * item.qty : 0), 0);
-  document.getElementById("cartTotal").textContent = money(total);
-  document.getElementById("checkoutLink").href = "#checkout";
+function renderFilterBar({ route, query = "", section = "", tag = "", sort = "featured", hidden = {}, tags = [], includeSectionFilter = false }) {
+  return `<form class="filter-bar" data-filter-form="${route}">
+    ${Object.entries(hidden).map(([key, value]) => `<input type="hidden" name="${key}" value="${escapeHtml(value)}" />`).join("")}
+    <div class="filter-field filter-field-search">
+      <label for="filterQuery">Search</label>
+      <input id="filterQuery" name="q" value="${escapeHtml(query)}" placeholder="Search dry fruits, honey, shilajit..." />
+    </div>
+    ${includeSectionFilter ? `<div class="filter-field">
+      <label for="filterSection">Section</label>
+      <select id="filterSection" name="section">
+        <option value="">All sections</option>
+        ${catalogSections.map((entry) => `<option value="${slug(entry.title)}" ${section === slug(entry.title) ? "selected" : ""}>${entry.title}</option>`).join("")}
+      </select>
+    </div>` : ""}
+    <div class="filter-field">
+      <label for="filterTag">Tag</label>
+      <select id="filterTag" name="tag">
+        <option value="">All tags</option>
+        ${tags.map((entry) => `<option value="${slug(entry)}" ${tag === slug(entry) ? "selected" : ""}>${entry}</option>`).join("")}
+      </select>
+    </div>
+    <div class="filter-field">
+      <label for="filterSort">Sort</label>
+      <select id="filterSort" name="sort">
+        <option value="featured" ${sort === "featured" ? "selected" : ""}>Featured</option>
+        <option value="price-low" ${sort === "price-low" ? "selected" : ""}>Price: Low to High</option>
+        <option value="price-high" ${sort === "price-high" ? "selected" : ""}>Price: High to Low</option>
+        <option value="name" ${sort === "name" ? "selected" : ""}>Name A-Z</option>
+      </select>
+    </div>
+    <button type="submit">Apply</button>
+  </form>`;
 }
 
-function getCartTotal() {
-  return cart.reduce((sum, item) => sum + (typeof item.price === "number" ? item.price * item.qty : 0), 0);
+function filterProducts(products, { query = "", tag = "", sort = "featured" }) {
+  let filtered = products.slice();
+  if (query.trim()) {
+    const cleanQuery = query.trim().toLowerCase();
+    filtered = filtered.filter((item) => {
+      const text = `${item.name} ${item.desc} ${item.tag || ""} ${item.section || ""}`.toLowerCase();
+      return text.includes(cleanQuery);
+    });
+  }
+  if (tag) {
+    filtered = filtered.filter((item) => slug(item.tag || "") === tag);
+  }
+  return sortProducts(filtered, sort);
 }
 
-function buildWhatsAppOrderLink() {
-  const order = cart.map((item) => `${item.name} x ${item.qty}`).join(", ");
-  const name = document.getElementById("customerName")?.value.trim();
-  const phone = document.getElementById("customerPhone")?.value.trim();
-  const city = document.getElementById("checkoutCity")?.value.trim() || deliveryDetails.city;
-  const address = document.getElementById("customerAddress")?.value.trim() || deliveryDetails.area;
-  const notes = document.getElementById("checkoutNotes")?.value.trim();
-  const orderType = document.querySelector("input[name='checkoutOrderType']:checked")?.value || deliveryDetails.orderType;
-  const message = [
-    "Assalam o Alaikum, I want to order from Meva House.",
-    `Order: ${order || "Please share product details"}`,
-    `Total: ${money(getCartTotal())}`,
-    `Order type: ${orderType}`,
-    `City: ${city}`,
-    `Address/Area: ${address}`,
-    name ? `Name: ${name}` : "",
-    phone ? `Phone: ${phone}` : "",
-    notes ? `Notes: ${notes}` : "",
-  ].filter(Boolean).join("\n");
-  return `https://wa.me/923438802989?text=${encodeURIComponent(message)}`;
+function sortProducts(products, sort) {
+  const sorted = products.slice();
+  if (sort === "price-low") {
+    return sorted.sort((a, b) => numericPrice(a.price) - numericPrice(b.price));
+  }
+  if (sort === "price-high") {
+    return sorted.sort((a, b) => numericPrice(b.price) - numericPrice(a.price));
+  }
+  if (sort === "name") {
+    return sorted.sort((a, b) => a.name.localeCompare(b.name));
+  }
+  return sorted;
 }
 
-function updatePlaceOrderLink() {
-  const link = document.getElementById("placeOrderLink");
-  if (link) link.href = buildWhatsAppOrderLink();
+function buildHash(route, values) {
+  const params = new URLSearchParams();
+  Object.entries(values || {}).forEach(([key, value]) => {
+    if (value) params.set(key, value);
+  });
+  const suffix = params.toString();
+  return `#${route}${suffix ? `?${suffix}` : ""}`;
 }
 
 function openDrawer(id) {
@@ -648,6 +1148,95 @@ function closeDrawers() {
   });
 }
 
+function addToCart(productId, qty = 1) {
+  const item = findProduct(productId);
+  if (!item) return;
+  const existing = cart.find((cartItem) => cartItem.id === productId);
+  if (existing) existing.qty += qty;
+  else cart.push({ ...item, qty });
+  persistCart();
+  updateCart();
+  updateCheckoutSummary();
+  showToast(`${item.name} added to cart`);
+}
+
+function updateCartQuantity(productId, delta) {
+  const item = cart.find((entry) => entry.id === productId);
+  if (!item) return;
+  item.qty = Math.max(1, item.qty + delta);
+  persistCart();
+  updateCart();
+  updateCheckoutSummary();
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter((item) => item.id !== productId);
+  persistCart();
+  updateCart();
+  updateCheckoutSummary();
+}
+
+function updateCart() {
+  const count = cart.reduce((sum, item) => sum + item.qty, 0);
+  document.getElementById("cartCount").textContent = String(count);
+  document.getElementById("cartItems").innerHTML =
+    cart
+      .map(
+        (item) => `<div class="cart-line">
+          <img src="${item.image}" alt="${item.name}" />
+          <div>
+            <strong>${item.name}</strong>
+            <span>${money(item.price)} each</span>
+            <div class="cart-qty-controls">
+              <button type="button" data-cart-qty="-1" data-id="${item.id}" aria-label="Decrease quantity">-</button>
+              <b>${item.qty}</b>
+              <button type="button" data-cart-qty="1" data-id="${item.id}" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+          <button type="button" data-remove="${item.id}" aria-label="Remove ${item.name}">&times;</button>
+        </div>`,
+      )
+      .join("") || `<p class="empty-cart">Your cart is empty.</p>`;
+  document.getElementById("cartTotal").textContent = money(getCartSubtotal());
+  document.getElementById("checkoutLink").href = "#checkout";
+}
+
+function updateCheckoutSummary() {
+  const rows = document.getElementById("checkoutRows");
+  if (rows) rows.innerHTML = renderCheckoutRows();
+
+  const snapshot = getCheckoutSnapshot();
+  const subtotal = document.getElementById("checkoutSubtotal");
+  const delivery = document.getElementById("checkoutDelivery");
+  const total = document.getElementById("checkoutGrandTotal");
+  const eta = document.getElementById("deliveryEta");
+  const link = document.getElementById("placeOrderLink");
+  const paymentHelp = document.getElementById("paymentMethodHelp");
+
+  if (subtotal) subtotal.textContent = money(snapshot.subtotal);
+  if (delivery) delivery.textContent = money(snapshot.deliveryCharge);
+  if (total) total.textContent = money(snapshot.total);
+  if (eta) eta.textContent = snapshot.eta;
+  if (link) {
+    link.href = cart.length ? buildWhatsAppOrderLink() : "#search";
+    link.classList.toggle("is-disabled", !cart.length);
+  }
+  if (paymentHelp) {
+    const method = paymentMethods.find((entry) => entry.value === snapshot.paymentMethod) || paymentMethods[0];
+    paymentHelp.innerHTML = `<strong>${method.title}</strong><span>${method.detail}</span>`;
+  }
+
+  deliveryDetails = {
+    orderType: snapshot.orderType,
+    city: snapshot.city || deliveryDetails.city,
+    area: snapshot.area || deliveryDetails.area,
+    address: snapshot.address || deliveryDetails.address,
+    paymentMethod: snapshot.paymentMethod,
+  };
+  persistDelivery();
+  syncAccountUI();
+}
+
 function showToast(message) {
   const toast = document.getElementById("toast");
   toast.textContent = message;
@@ -656,6 +1245,92 @@ function showToast(message) {
   showToast.timer = setTimeout(() => {
     toast.hidden = true;
   }, 1800);
+}
+
+function applyFilterForm(form) {
+  const route = form.dataset.filterForm;
+  const values = {};
+  new FormData(form).forEach((value, key) => {
+    const cleanValue = String(value).trim();
+    if (cleanValue && cleanValue !== "featured") {
+      values[key] = cleanValue;
+    }
+  });
+  window.location.hash = buildHash(route, values).slice(1);
+}
+
+function handleAccountSignup(form) {
+  const formData = new FormData(form);
+  account = {
+    loggedIn: true,
+    name: String(formData.get("name") || "").trim(),
+    phone: String(formData.get("phone") || "").trim(),
+    email: String(formData.get("email") || "").trim(),
+    password: String(formData.get("password") || "").trim(),
+    city: String(formData.get("city") || "").trim() || deliveryDetails.city,
+    area: String(formData.get("area") || "").trim() || deliveryDetails.area,
+    address: String(formData.get("address") || "").trim(),
+    preferredPayment: String(formData.get("preferredPayment") || DEFAULT_ACCOUNT.preferredPayment),
+  };
+  deliveryDetails = {
+    ...deliveryDetails,
+    city: account.city,
+    area: account.area,
+    address: account.address,
+    paymentMethod: account.preferredPayment,
+  };
+  persistAccount();
+  persistDelivery();
+  syncAccountUI();
+  showToast("Account created");
+  renderAccountPage();
+}
+
+function handleAccountLogin(form) {
+  const formData = new FormData(form);
+  const identity = String(formData.get("identity") || "").trim().toLowerCase();
+  const password = String(formData.get("password") || "").trim();
+  if (!account.email && !account.phone) {
+    showToast("Create an account first");
+    return;
+  }
+  const matchesIdentity = [account.email.toLowerCase(), account.phone.toLowerCase()].includes(identity);
+  if (!matchesIdentity || account.password !== password) {
+    showToast("Details do not match the saved account");
+    return;
+  }
+  account.loggedIn = true;
+  persistAccount();
+  syncAccountUI();
+  showToast("Signed in");
+  renderAccountPage();
+}
+
+function handleAccountSave(form) {
+  const formData = new FormData(form);
+  account = {
+    ...account,
+    loggedIn: true,
+    name: String(formData.get("name") || "").trim(),
+    phone: String(formData.get("phone") || "").trim(),
+    email: String(formData.get("email") || "").trim(),
+    city: String(formData.get("city") || "").trim(),
+    area: String(formData.get("area") || "").trim(),
+    address: String(formData.get("address") || "").trim(),
+    preferredPayment: String(formData.get("preferredPayment") || account.preferredPayment),
+  };
+  deliveryDetails = {
+    ...deliveryDetails,
+    city: account.city || deliveryDetails.city,
+    area: account.area || deliveryDetails.area,
+    address: account.address || deliveryDetails.address,
+    paymentMethod: account.preferredPayment,
+  };
+  persistAccount();
+  persistDelivery();
+  syncAccountUI();
+  showToast("Account updated");
+  renderAccountPage();
 }
 
 function handleHash() {
@@ -670,78 +1345,125 @@ function handleHash() {
   }
   if (hash === "checkout") {
     renderCheckoutPage();
-    closeDrawers();
     return;
   }
-  if (["about", "contact", "terms", "privacy"].includes(hash)) {
+  if (hash === "account") {
+    renderAccountPage();
+    return;
+  }
+  if (hash === "blog") {
+    renderBlogPage();
+    return;
+  }
+  if (hash.startsWith("blog/")) {
+    renderBlogPostPage(hash.split("/")[1]);
+    return;
+  }
+  if (["about", "contact", "terms", "privacy", "delivery"].includes(hash)) {
     renderInfoPage(hash);
     return;
   }
+  if (hash === "search") {
+    renderSearchPage("", new URLSearchParams());
+    return;
+  }
   if (hash.startsWith("search")) {
-    const query = new URLSearchParams(hash.split("?")[1] || "").get("q") || "";
-    renderSearchPage(query);
+    const params = new URLSearchParams(hash.split("?")[1] || "");
+    renderSearchPage(params.get("q") || "", params);
     return;
   }
   if (hash.startsWith("category/")) {
-    renderCategoryPage(hash.split("/")[1]);
+    renderCategoryPage(hash.slice("category/".length));
     return;
   }
   if (hash.startsWith("product/")) {
     renderProductPage(hash.split("/")[1]);
     return;
   }
-  if (hash.startsWith("social-")) {
-    showToast("Add the client's real social profile URL here.");
-    history.replaceState(null, "", "#home");
-  }
+  showHome();
 }
 
 function bindInteractions() {
   document.querySelector(".hero-next").addEventListener("click", () => {
-    moveHero(1);
+    moveHero(1, true);
   });
   document.querySelector(".hero-prev").addEventListener("click", () => {
-    moveHero(-1);
+    moveHero(-1, true);
   });
+
   const heroCarousel = document.getElementById("heroCarousel");
   heroCarousel.addEventListener("click", (event) => {
     const dot = event.target.closest("[data-slide]");
     if (dot) {
-      heroIndex = Number(dot.dataset.slide);
-      updateHero();
+      setHeroIndex(Number(dot.dataset.slide), true);
       return;
     }
 
     const card = event.target.closest(".hero-slide-card");
-    if (card?.classList.contains("is-prev")) {
-      moveHero(-1);
-    }
-    if (card?.classList.contains("is-next")) {
-      moveHero(1);
-    }
+    if (card?.classList.contains("is-prev")) moveHero(-1, true);
+    if (card?.classList.contains("is-next")) moveHero(1, true);
+  });
+  heroCarousel.addEventListener("mouseenter", () => clearInterval(heroTimer));
+  heroCarousel.addEventListener("mouseleave", startHeroAutoplay);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) clearInterval(heroTimer);
+    else startHeroAutoplay();
   });
 
   document.querySelector(".category-toggle").addEventListener("click", () => openDrawer("categoryDrawer"));
   document.querySelector(".cart-btn").addEventListener("click", () => openDrawer("cartDrawer"));
-  document.querySelector(".login-btn").addEventListener("click", () => document.getElementById("loginDialog").showModal());
-  document.getElementById("locationButton").addEventListener("click", () => document.getElementById("locationDialog").showModal());
+  document.querySelector(".login-btn").addEventListener("click", () => {
+    window.location.hash = "account";
+  });
+  document.getElementById("locationButton").addEventListener("click", () => {
+    document.getElementById("locationDialog").showModal();
+  });
   document.getElementById("drawerBackdrop").addEventListener("click", closeDrawers);
 
-  document.getElementById("locationForm").addEventListener("submit", () => {
+  document.getElementById("locationForm").addEventListener("submit", (event) => {
+    event.preventDefault();
     deliveryDetails = {
+      ...deliveryDetails,
       orderType: document.querySelector("input[name='orderType']:checked")?.value || "Delivery",
       city: document.getElementById("locationCity").value.trim() || "Across Pakistan",
       area: document.getElementById("locationArea").value.trim() || "Gilgit-Baltistan",
     };
-    document.getElementById("deliveryText").textContent = `${deliveryDetails.area}, ${deliveryDetails.city}`;
-    showToast(`${deliveryDetails.orderType} location saved`);
+    persistDelivery();
+    syncAccountUI();
+    document.getElementById("locationDialog").close();
+    showToast(`${deliveryDetails.orderType} details saved`);
   });
 
   document.getElementById("searchForm").addEventListener("submit", (event) => {
     event.preventDefault();
     const query = document.getElementById("searchInput").value.trim();
-    window.location.hash = `search?q=${encodeURIComponent(query)}`;
-    renderSearchPage(query);
+    window.location.hash = buildHash("search", { q: query }).slice(1);
+  });
+
+  document.addEventListener("submit", (event) => {
+    const filterForm = event.target.closest("[data-filter-form]");
+    if (filterForm) {
+      event.preventDefault();
+      applyFilterForm(filterForm);
+      return;
+    }
+
+    if (event.target.id === "accountSignupForm") {
+      event.preventDefault();
+      handleAccountSignup(event.target);
+      return;
+    }
+
+    if (event.target.id === "accountLoginForm") {
+      event.preventDefault();
+      handleAccountLogin(event.target);
+      return;
+    }
+
+    if (event.target.id === "accountProfileForm") {
+      event.preventDefault();
+      handleAccountSave(event.target);
+    }
   });
 
   document.addEventListener("click", (event) => {
@@ -758,8 +1480,12 @@ function bindInteractions() {
 
     const removeButton = event.target.closest("[data-remove]");
     if (removeButton) {
-      cart = cart.filter((item) => item.id !== removeButton.dataset.remove);
-      updateCart();
+      removeFromCart(removeButton.dataset.remove);
+    }
+
+    const qtyButton = event.target.closest("[data-cart-qty]");
+    if (qtyButton) {
+      updateCartQuantity(qtyButton.dataset.id, Number(qtyButton.dataset.cartQty));
     }
 
     const heart = event.target.closest(".heart");
@@ -776,32 +1502,39 @@ function bindInteractions() {
       document.querySelector(".main-detail-image").src = image;
     }
 
-    const qtyButton = event.target.closest("[data-qty]");
-    if (qtyButton) {
+    const detailQtyButton = event.target.closest("[data-qty]");
+    if (detailQtyButton) {
       const input = document.getElementById("detailQty");
-      input.value = Math.max(1, Number(input.value || 1) + Number(qtyButton.dataset.qty));
+      input.value = Math.max(1, Number(input.value || 1) + Number(detailQtyButton.dataset.qty));
     }
 
-    const routeSearch = event.target.closest("#routeSearchButton");
-    if (routeSearch) {
-      const query = document.getElementById("routeSearchInput").value.trim();
-      renderSearchPage(query);
-    }
-  });
-
-  document.addEventListener("input", (event) => {
-    if (event.target.closest("#checkoutForm")) {
-      updatePlaceOrderLink();
+    if (event.target.id === "accountLogoutButton") {
+      account.loggedIn = false;
+      persistAccount();
+      syncAccountUI();
+      showToast("Signed out");
+      renderAccountPage();
     }
   });
 
   document.addEventListener("change", (event) => {
     if (event.target.closest("#checkoutForm")) {
-      updatePlaceOrderLink();
+      updateCheckoutSummary();
+    }
+    const filterForm = event.target.closest("[data-filter-form]");
+    if (filterForm && event.target.tagName === "SELECT") {
+      applyFilterForm(filterForm);
+    }
+  });
+
+  document.addEventListener("input", (event) => {
+    if (event.target.closest("#checkoutForm")) {
+      updateCheckoutSummary();
     }
   });
 
   window.addEventListener("hashchange", handleHash);
+  startHeroAutoplay();
 }
 
 function slug(text) {
@@ -809,12 +1542,14 @@ function slug(text) {
 }
 
 function escapeHtml(text) {
-  return String(text).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[char]);
+  return String(text).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char]));
 }
 
 renderCategories();
 renderSections();
+renderBlogPreview();
 renderHero();
 updateCart();
+syncAccountUI();
 bindInteractions();
 handleHash();
